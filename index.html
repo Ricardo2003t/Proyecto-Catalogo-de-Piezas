@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Repuestos Automotrices</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="container">
+            <!-- Logo (izquierda) -->
+            <div class="header-logo">
+                <h1>CATÁLOGO DE REPUESTOS</h1>
+                <p>Piezas Originales y Accesorios</p>
+            </div>
+            
+            <!-- Controles (derecha) -->
+            <div class="header-controls">
+                <!-- Búsqueda Móvil -->
+                <div class="search-mobile-wrapper">
+                    <button id="search-toggle-mobile" class="search-btn-mobile">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10" cy="10" r="6" stroke="white" stroke-width="2" fill="none"/>
+                            <path d="M14.5 14.5l4.5 4.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <input type="text" id="buscador-header" class="search-input-expanded" placeholder="Buscar..." />
+                </div>
+                
+                <!-- Búsqueda Desktop -->
+                <div class="search-container">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="search-toggle">
+                        <circle cx="10" cy="10" r="6" stroke="white" stroke-width="2" fill="none"/>
+                        <path d="M14.5 14.5l4.5 4.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <input type="text" id="buscador-header-desktop" placeholder="Buscar..." />
+                </div>
+                
+                <!-- Hamburger -->
+                <button id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Navegación Desktop -->
+        <nav id="nav-menu">
+            <a href="#inicio">Inicio</a>
+            <a href="#catalogo">Catálogo</a>
+            <a href="#taller">Taller</a>
+            <a href="https://maps.app.goo.gl/2Fb35R2ccH1GtYSU8" target="_blank">Ubicación</a>
+            <a href="#contacto">Contacto</a>
+        </nav>
+    </header>
+
+    <!-- Menú Móvil Overlay -->
+    <div id="menu-overlay"></div>
+    
+    <!-- Menú Móvil -->
+    <div id="nav-menu-mobile">
+        <div class="menu-header">
+            <h2>MENÚ</h2>
+            <button id="close-menu">&times;</button>
+        </div>
+        <nav>
+            <a href="#inicio">Inicio</a>
+            <a href="#catalogo">Catálogo</a>
+            <a href="#taller">Taller</a>
+            <a href="https://maps.app.goo.gl/2Fb35R2ccH1GtYSU8" target="_blank">Ubicación</a>
+            <a href="https://wa.me/5354269053?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20repuestos" target="_blank">Contacto</a>
+        </nav>
+    </div>
+
+    <!-- Sección Hero -->
+    <section id="inicio">
+        <div class="container">
+            <h2>Piezas de Calidad para tu Vehículo</h2>
+            <p>Catálogo completo de repuestos originales y accesorios de alta calidad. Disponemos de piezas para Peugeot, Hyundai y Mercedes. Garantía de excelencia en cada pieza para mantener tu vehículo en óptimas condiciones</p>
+        </div>
+    </section>
+
+    <!-- Catálogo -->
+    <section id="catalogo">
+        <div class="container">
+            <h2>Catálogo de Piezas</h2>
+            
+            <!-- Banner Informativo -->
+            <div class="banner-solicitud">
+                <p>¿No encuentras la pieza que necesitas? <strong>¡Podemos conseguirla!</strong> Contáctanos y solicita cualquier repuesto Peugeot que no esté en nuestro catálogo.</p>
+                <div class="banner-solicitud-btns">
+                    <a href="https://wa.me/5354269053?text=Hola,%20tengo%20una%20solicitud%20de%20repuesto%20que%20no%20aparece%20en%20el%20catálogo" target="_blank" class="btn-icon-solo whatsapp" title="Escribir por WhatsApp">
+                        <img src="Icons8/icons8-whatsapp-50.png" alt="WhatsApp" class="icon-btn-img">
+                    </a>
+                    <a href="tel:+5354269053" class="btn-icon-solo phone" title="Llamar">
+                        <img src="Icons8/icons8-phone-50.png" alt="Teléfono" class="icon-btn-img">
+                    </a>
+                </div>
+            </div>
+            
+            <div class="filtro-tabs">
+                <div class="tabs-container">
+                    <!-- Marca -->
+                    <button class="tab-option active" data-marca="todos" data-tipo="marca">Todas</button>
+                    <button class="tab-option" data-marca="peugeot" data-tipo="marca">Peugeot</button>
+                    <button class="tab-option" data-marca="hyundai" data-tipo="marca">Hyundai</button>
+                    <button class="tab-option" data-marca="mercedes" data-tipo="marca">Mercedes</button>
+                </div>
+            </div>
+
+            <div class="filtro-tabs-modelos">
+                <div class="tabs-container">
+                    <!-- Modelo -->
+                    <button class="tab-option active-modelo" data-modelo="todos" data-tipo="modelo">Todos</button>
+                    <button class="tab-option" data-modelo="universal" data-marca="peugeot" data-tipo="modelo">Universal</button>
+                    <button class="tab-option" data-modelo="otras" data-marca="peugeot" data-tipo="modelo">Otras</button>
+                    <button class="tab-option" data-modelo="tud5" data-marca="peugeot" data-tipo="modelo">TUD5</button>
+                    <button class="tab-option" data-modelo="tu5jp4" data-marca="peugeot" data-tipo="modelo">TU5JP4 (301)</button>
+                    <button class="tab-option" data-modelo="xud9" data-marca="peugeot" data-tipo="modelo">XUD9</button>
+                    <button class="tab-option" data-modelo="xud7" data-marca="peugeot" data-tipo="modelo">XUD7</button>
+                    <button class="tab-option" data-modelo="301" data-marca="peugeot" data-tipo="modelo">301</button>
+                    <button class="tab-option" data-modelo="106" data-marca="peugeot" data-tipo="modelo">106</button>
+                    <button class="tab-option" data-modelo="tu3" data-marca="peugeot" data-tipo="modelo">TU3</button>
+                    <button class="tab-option" data-modelo="t1" data-marca="peugeot" data-tipo="modelo">T1</button>
+                    <button class="tab-option" data-modelo="dvv8" data-marca="peugeot" data-tipo="modelo">DVV8</button>
+                    <button class="tab-option" data-modelo="405" data-marca="peugeot" data-tipo="modelo">405</button>
+                    <button class="tab-option" data-modelo="205" data-marca="peugeot" data-tipo="modelo">205</button>
+                    <button class="tab-option" data-modelo="206" data-marca="peugeot" data-tipo="modelo">206</button>
+                    <button class="tab-option" data-modelo="207" data-marca="peugeot" data-tipo="modelo">207</button>
+                    <button class="tab-option" data-modelo="308" data-marca="peugeot" data-tipo="modelo">308</button>
+                    <button class="tab-option" data-modelo="306" data-marca="peugeot" data-tipo="modelo">306</button>
+                    <button class="tab-option" data-modelo="307" data-marca="peugeot" data-tipo="modelo">307</button>
+                    <button class="tab-option" data-modelo="309" data-marca="peugeot" data-tipo="modelo">309</button>
+                    <button class="tab-option" data-modelo="406" data-marca="peugeot" data-tipo="modelo">406</button>
+                    <button class="tab-option" data-modelo="partner" data-marca="peugeot" data-tipo="modelo">Partner</button>
+                    <button class="tab-option" data-modelo="h100" data-marca="hyundai" data-tipo="modelo">H100</button>
+                </div>
+            </div>
+            
+            <input type="text" id="buscador" placeholder="Buscar pieza..." style="display: none;" />
+        </div>
+    </section>
+
+    <!-- Productos -->
+    <section class="productos">
+        <div class="container">
+            <div id="productos-grid" class="productos-grid">
+                <!-- Los productos se cargarán aquí con JavaScript -->
+            </div>
+            <div id="sin-resultados" class="sin-resultados" style="display: none;">
+                <p>No hay productos disponibles para esta búsqueda. Intenta con otros términos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="modal-producto" class="modal">
+        <div class="modal-contenido">
+            <span class="modal-close">&times;</span>
+            <div class="modal-body">
+                <div id="modal-imagen-container" class="modal-imagen">
+                    <img id="modal-img" src="" alt="Producto">
+                </div>
+                <div class="modal-info">
+                    <h2 id="modal-nombre"></h2>
+                    <div class="modal-detalles">
+                        <p></strong> <span id="modal-modelo"></span></p>
+                        <p><strong> <span id="modal-disponibilidad-badge"></span></p>
+                        <p></strong> <span id="modal-precio" class="precio-modal"></span></p>
+                    </div>
+                    <div class="modal-descripcion">
+                        <h3>Descripción del Producto</h3>
+                        <p id="modal-descripcion"></p>
+                    </div>
+                    <div class="modal-buttons">
+                        <a id="btn-whatsapp" class="btn-icon-solo whatsapp" target="_blank" title="Enviar por WhatsApp">
+                            <img src="Icons8/icons8-whatsapp-50.png" alt="WhatsApp" class="icon-btn-img">
+                        </a>
+                        <a id="btn-llamar" class="btn-icon-solo phone" href="tel:+5354269053" title="Llamar">
+                            <img src="Icons8/icons8-phone-50.png" alt="Teléfono" class="icon-btn-img">
+                        </a>
+                    </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Taller -->
+    <section id="taller">
+        <div class="container">
+            <div>
+                <h2>¿Tienes un Problema?</h2>
+                <p>Somos un taller especializado que no solo vende repuestos, también ofrece asesoramiento profesional para tu Peugeot:</p>
+                <ul>
+                    <li>
+                        <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        <span>Diagnosticar tu vehículo con precisión</span>
+                    </li>
+                    <li>
+                        <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        <span>Recomendarte las piezas exactas que necesitas</span>
+                    </li>
+                    <li>
+                        <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        <span>Asesorarte sobre mantenimiento preventivo</span>
+                    </li>
+                    <li>
+                        <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        <span>Resolver problemas técnicos complejos</span>
+                    </li>
+                </ul>
+            </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto">
+        <div class="container">
+            <div class="contacto-info">
+                <div class="contacto-item">
+                    <a href="https://wa.me/5354269053?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20repuestos" target="_blank" title="Enviar por WhatsApp">
+                        <img src="Icons8/icons8-whatsapp-50.png" alt="WhatsApp" class="contacto-icon">
+                    </a>
+                    <span class="contacto-phone">+53 5426 9053</span>
+                </div>
+                <div class="contacto-item">
+                    <a href="tel:+5354269053" title="Llamar">
+                        <img src="Icons8/icons8-phone-50.png" alt="Teléfono" class="contacto-icon">
+                    </a>
+                    <span class="contacto-phone">+53 5426 9053</span>
+                </div>
+                <div class="contacto-item">
+                    <div class="contacto-icon-circle">
+                        <img src="Icons8/icons8-address-50.png" alt="Ubicación" class="contacto-icon">
+                    </div>
+                    <span class="contacto-phone">La Habana, Marianao AVE 45 / 116 y 118 #11614 altos</span>
+                </div>
+                <div class="contacto-item">
+                    <a href="https://maps.app.goo.gl/2Fb35R2ccH1GtYSU8" target="_blank" title="Ver en Google Maps">
+                        <img src="Icons8/icons8-location-50.png" alt="Ubicación en Google Maps" class="contacto-icon">
+                    </a>
+                    <span class="contacto-phone">Ver en Google Maps</span>
+                </div>
+            </div>
+
+            <!-- Mapa como botón grande -->
+            <a href="https://maps.app.goo.gl/2Fb35R2ccH1GtYSU8" target="_blank" class="mapa-boton">
+                <img src="Icons8/Direccion google maps.png" alt="Mapa de ubicación" class="mapa-fondo">
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Catálogo de Piezas Peugeot. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Botón Flotante -->
+    <a href="https://wa.me/5354269053?text=Hola,%20tengo%20una%20solicitud%20de%20repuesto%20que%20no%20aparece%20en%20el%20catálogo" target="_blank" class="floating-btn" title="¿No encuentras la pieza? ¡Solicítala!">
+        <span class="floating-btn-icon">?</span>
+        <span class="floating-btn-text">¿No encuentras la pieza?</span>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
