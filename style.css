@@ -139,7 +139,7 @@ header {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 50;
+    z-index: 200;
     background: linear-gradient(to right, #0f172a, #1e3a8a);
     color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -448,10 +448,12 @@ header .container {
     padding: 0.25rem;
     background: none;
     border: none;
-    z-index: 100;
+    z-index: 250;
     cursor: pointer;
     flex-shrink: 0;
     order: 3;
+    visibility: visible;
+    opacity: 1;
 }
 
 @media (min-width: 768px) {

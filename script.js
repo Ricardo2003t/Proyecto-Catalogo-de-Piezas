@@ -1,3 +1,23 @@
+// ========================================
+// MANEJO DEL BACK BUTTON - EVITAR SALIR DE LA WEB
+// ========================================
+window.addEventListener('load', function() {
+    // Agregar un estado inicial al historial
+    history.pushState(null, null, location.href);
+    
+    // Interceptar el botón atrás
+    window.addEventListener('popstate', function() {
+        // Volver a agregar el estado para evitar que salga
+        history.pushState(null, null, location.href);
+        
+        // Cerrar modal si está abierto
+        const modal = document.getElementById('modal-producto');
+        if (modal && modal.style.display === 'block') {
+            cerrarModal();
+        }
+    });
+});
+
 // Base de datos de productos
 const productos = [
     {
