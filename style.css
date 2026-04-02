@@ -178,19 +178,18 @@ header .container {
 .header-logo {
     flex: 0 0 auto;
     white-space: normal;
-    transition: opacity 0.3s, max-width 0.3s;
+    transition: opacity 0.3s, max-width 0.3s, visibility 0.3s;
     display: flex;
     flex-direction: column;
     justify-content: center;
     min-width: 140px;
-    visibility: visible !important;
-    opacity: 1 !important;
 }
 
 .header-logo.hidden {
     opacity: 0;
     max-width: 0;
     overflow: hidden;
+    visibility: hidden;
 }
 
 .header-controls {

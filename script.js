@@ -536,7 +536,7 @@ function configurarBuscadorHeader() {
         if (buscadorMobile) {
             buscadorMobile.classList.add('expanded');
             if (searchMobileWrapper) searchMobileWrapper.classList.add('expanded');
-            // NO ocultamos el header-logo en móvil
+            if (headerLogo) headerLogo.classList.add('hidden');
             scrollAlCatalogo();
             buscadorMobile.focus();
         }
@@ -547,9 +547,9 @@ function configurarBuscadorHeader() {
         if (buscadorMobile) {
             buscadorMobile.classList.remove('expanded');
             if (searchMobileWrapper) searchMobileWrapper.classList.remove('expanded');
-            // Ya no necesitamos remover 'hidden' del header-logo
+            if (headerLogo) headerLogo.classList.remove('hidden');
             buscadorMobile.value = '';
-            if (buscadorOriginal) buscadorOriginal.value = '';
+            if (buscadorDesktop) buscadorDesktop.value = '';
             filtrarProductos();
         }
     }
