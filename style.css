@@ -403,7 +403,7 @@ header .container {
 
 /* Navegación Desktop */
 #nav-menu {
-    display: flex;
+    display: none;
     gap: 1rem;
     margin-top: 0;
     font-size: 0.75rem;
