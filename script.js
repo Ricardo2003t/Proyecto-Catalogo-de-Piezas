@@ -2,19 +2,22 @@
 // MANEJO DEL BACK BUTTON - EVITAR SALIR DE LA WEB
 // ========================================
 window.addEventListener('load', function() {
-    // Agregar un estado inicial al historial
-    history.pushState(null, null, location.href);
+    // Agregar un estado inicial al historial para bloquear salida
+    history.pushState({type: 'catalogo'}, null, location.href);
     
-    // Interceptar el botón atrás
-    window.addEventListener('popstate', function() {
-        // Volver a agregar el estado para evitar que salga
-        history.pushState(null, null, location.href);
+    // Interceptar el botón atrás de forma más robusta
+    window.addEventListener('popstate', function(event) {
+        event.preventDefault();
+        
+        // Siempre volver a agregar estado para evitar que salga
+        history.pushState({type: 'catalogo'}, null, location.href);
         
         // Cerrar modal si está abierto
         const modal = document.getElementById('modal-producto');
         if (modal && modal.classList.contains('flex')) {
             cerrarModal();
         }
+        // Si no hay modal, simplemente no hacemos nada (el historial se mantiene en la página)
     });
 });
 
