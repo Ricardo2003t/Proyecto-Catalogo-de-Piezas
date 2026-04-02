@@ -12,7 +12,7 @@ window.addEventListener('load', function() {
         
         // Cerrar modal si está abierto
         const modal = document.getElementById('modal-producto');
-        if (modal && modal.style.display === 'block') {
+        if (modal && modal.classList.contains('flex')) {
             cerrarModal();
         }
     });

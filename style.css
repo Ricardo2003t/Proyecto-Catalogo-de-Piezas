@@ -1162,7 +1162,7 @@ section {
 }
 
 .modal-close {
-    position: absolute;
+    position: fixed;
     top: 0.5rem;
     right: 0.75rem;
     background: rgba(0, 0, 0, 0.7);
@@ -1172,7 +1172,7 @@ section {
     cursor: pointer;
     opacity: 0.9;
     transition: opacity 0.3s;
-    z-index: 9999;
+    z-index: 99999;
     padding: 0.5rem;
     width: 3rem;
     height: 3rem;
@@ -1181,10 +1181,24 @@ section {
     justify-content: center;
     border-radius: 50%;
     touch-action: manipulation;
+    visibility: visible !important;
+}
+
+@media (max-width: 767px) {
+    .modal-close {
+        display: flex !important;
+        position: fixed !important;
+        top: 0.5rem !important;
+        right: 0.75rem !important;
+        z-index: 99999 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
 }
 
 @media (min-width: 768px) {
     .modal-close {
+        position: absolute;
         top: 1rem;
         right: 1.5rem;
         background: none;
@@ -1231,7 +1245,7 @@ section {
 
 .modal-imagen {
     width: 100%;
-    height: 400px;
+    aspect-ratio: 1/1;
     background: linear-gradient(135deg, #dbeafe, #f1f5f9);
     border-radius: 0;
     overflow: hidden;
