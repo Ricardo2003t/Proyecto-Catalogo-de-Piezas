@@ -1524,6 +1524,11 @@ section {
     box-shadow: 0 0 12px rgba(113, 160, 207, 0.3);
     border-radius: 50%;
     flex-shrink: 0;
+    text-decoration: none;
+    border: none;
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .contacto-icon-circle {
