@@ -403,18 +403,19 @@ header .container {
 
 /* Navegación Desktop */
 #nav-menu {
-    display: none;
-    gap: 2rem;
+    display: flex;
+    gap: 1rem;
     margin-top: 0;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-weight: 500;
-    position: absolute;
+    position: relative;
     bottom: auto;
-    left: 0;
-    right: 0;
-    padding: 0;
+    left: auto;
+    right: auto;
+    padding: 0 0.5rem;
     background: none;
     border-top: none;
+    flex-wrap: wrap;
 }
 
 @media (min-width: 768px) {
@@ -426,6 +427,7 @@ header .container {
         padding: 0;
         background: none;
         border-top: none;
+        font-size: 0.875rem;
     }
 }
 
