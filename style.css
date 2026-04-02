@@ -177,11 +177,14 @@ header .container {
 
 .header-logo {
     flex: 0 0 auto;
-    white-space: nowrap;
+    white-space: normal;
     transition: opacity 0.3s, max-width 0.3s;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    min-width: 140px;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .header-logo.hidden {
