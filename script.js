@@ -584,9 +584,12 @@ function configurarBuscadorHeader() {
         });
         
         buscadorMobile.addEventListener('blur', function() {
-            if (this.value === '') {
-                contraerBuscadorMovil();
-            }
+            // Esperar 200ms antes de contraer para permitir clicks en otros elementos
+            setTimeout(() => {
+                if (buscadorMobile.value === '') {
+                    contraerBuscadorMovil();
+                }
+            }, 200);
         });
         
         buscadorMobile.addEventListener('keydown', function(e) {
