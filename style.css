@@ -1625,6 +1625,8 @@ section {
     display: flex;
     align-items: center;
     gap: 1.2rem;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 
 .contacto-item a {
@@ -1644,6 +1646,15 @@ section {
     -webkit-tap-highlight-color: transparent;
 }
 
+.contacto-phone {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    pointer-events: none;
+}
+
 .contacto-icon-circle {
     display: inline-flex;
     align-items: center;
@@ -1660,12 +1671,6 @@ section {
     width: 38px;
     height: 38px;
     object-fit: contain;
-}
-
-.contacto-phone {
-    font-size: 1rem;
-    font-weight: 600;
-    color: white;
 }
 
 .mapa-boton {
