@@ -1,4 +1,32 @@
 // ========================================
+// MANEJO DE MAPS PARA iOS Y ANDROID
+// ========================================
+function abrirMapa(event) {
+    // Coordenadas: La Habana, Marianao AVE 45/116 y 118
+    const lat = 19.4326;
+    const lon = -76.2521;
+    const nombre = 'Catálogo de Repuestos';
+    const direccion = 'La Habana, Marianao AVE 45 / 116 y 118 #11614 altos';
+    
+    // Detectar iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    
+    if (isIOS) {
+        // Apple Maps para iOS
+        const appleMapURL = `maps://maps.apple.com/?address=${encodeURIComponent(direccion)}&ll=${lat},${lon}&q=${encodeURIComponent(nombre)}`;
+        window.location.href = appleMapURL;
+    } else {
+        // Google Maps para Android y otros
+        window.open('https://maps.app.goo.gl/2Fb35R2ccH1GtYSU8', '_blank', 'noopener,noreferrer');
+    }
+    
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+}
+
+// ========================================
 // MANEJO DEL BACK BUTTON - EVITAR SALIR DE LA WEB
 // ========================================
 window.addEventListener('load', function() {
@@ -18,6 +46,11 @@ window.addEventListener('load', function() {
             cerrarModal();
         }
         // Si no hay modal, simplemente no hacemos nada (el historial se mantiene en la página)
+    });
+    
+    // Agregar manejadores de mapas a todos los enlaces
+    document.querySelectorAll('a[href="https://maps.app.goo.gl/2Fb35R2ccH1GtYSU8"]').forEach(link => {
+        link.addEventListener('click', abrirMapa);
     });
 });
 
