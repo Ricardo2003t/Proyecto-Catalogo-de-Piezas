@@ -793,7 +793,7 @@ function cargarProductos() {
                     <div class="carousel-inner">
                         ${imagenes.map((img, i) => `
                             <div class="carousel-item ${i === 0 ? 'active' : ''}" style="background-image: url('${img}'); background-size: cover; background-position: center;">
-                                <img src="${img}" alt="${producto.nombre}" style="width: 100%; height: 100%; object-fit: cover;">
+                                <img ${i === 0 ? `src="${img}"` : `data-src="${img}"`} alt="${producto.nombre}" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" width="300" height="300">
                             </div>
                         `).join('')}
                     </div>
@@ -805,7 +805,7 @@ function cargarProductos() {
         } else {
             carouselHTML = `
                 <div class="producto-imagen" style="background-image: url('${primerImagen}'); background-size: cover; background-position: center;">
-                    <img src="${primerImagen}" alt="${producto.nombre}" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="${primerImagen}" alt="${producto.nombre}" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" width="300" height="300">
                 </div>
             `;
         }
@@ -885,6 +885,15 @@ function configurarCarrusel(container, imagenes) {
         dots.forEach((d, i) => {
             d.classList.toggle('active', i === currentIndex);
         });
+        
+        // Cargar imagen lazy si existe data-src
+        const items = container.querySelectorAll('.carousel-item');
+        if (items[currentIndex]) {
+            const img = items[currentIndex].querySelector('img');
+            if (img && img.dataset.src && !img.src) {
+                img.src = img.dataset.src;
+            }
+        }
     }
 }
 
