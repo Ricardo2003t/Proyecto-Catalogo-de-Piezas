@@ -1677,6 +1677,7 @@ section {
     display: block;
     position: relative;
     width: 100%;
+    aspect-ratio: 1 / 1;
     margin-top: 2.5rem;
     margin-bottom: 2.5rem;
     border-radius: 12px;
@@ -1700,15 +1701,15 @@ section {
 .mapa-fondo {
     display: block;
     width: 100%;
-    height: auto;
-    min-height: 500px;
+    height: 100%;
     object-fit: cover;
     border-radius: 12px;
 }
 
 @media (max-width: 768px) {
     .mapa-fondo {
-        min-height: 380px;
+        width: 100%;
+        height: 100%;
     }
 }
 
