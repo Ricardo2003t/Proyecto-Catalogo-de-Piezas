@@ -96,7 +96,7 @@ const productos = [
     },
     {
         marca: 'peugeot',
-        nombre: 'Pistones + Aroz + Pasadores + Camisas DW8',
+        nombre: 'Pistones + Aros + Pasadores + Camisas DW8',
         modelo: ['dw8'],
         precio: 300.00,
         imagenes: [
