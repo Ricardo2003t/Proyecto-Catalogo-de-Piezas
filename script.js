@@ -558,7 +558,7 @@ const productos = [
 let modeloActivo = 'todos';
 let marcaActiva = 'todos';
 let productosAMostrar = productos;
-const WHATSAPP_NUMBER = '+5354269053';
+const WHATSAPP_NUMBER = '+5352531473';
 
 // Obtener todos los modelos únicos disponibles
 function obtenerModelosDisponibles() {
