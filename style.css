@@ -1815,10 +1815,6 @@ img.placeholder {
         font-size: 0.95rem;
     }
 }
-    max-width: 350px;
-    padding: 1.5rem;
-    border-radius: 12px;
-}
 
 .contacto-btn {
     display: inline-flex;
