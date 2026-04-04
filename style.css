@@ -1756,6 +1756,65 @@ section {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+}
+
+/* ========================================
+   OPTIMIZACIONES PARA CONEXIONES LENTAS
+   ======================================== */
+
+/* Placeholder para skeleton loading */
+img.placeholder {
+    background: linear-gradient(90deg, #e8e8e8 25%, #f0f0f0 50%, #e8e8e8 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Estilo para botón "Cargar más" */
+.cargar-mas-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem;
+    grid-column: 1 / -1;
+}
+
+.btn-cargar-mas {
+    padding: 0.875rem 2rem;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+}
+
+.btn-cargar-mas:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.3);
+}
+
+.btn-cargar-mas:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+}
+
+@media (max-width: 768px) {
+    .btn-cargar-mas {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.95rem;
+    }
+}
     max-width: 350px;
     padding: 1.5rem;
     border-radius: 12px;
