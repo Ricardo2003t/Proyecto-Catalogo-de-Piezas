@@ -85,7 +85,7 @@ const productos = [
     {
         marca: 'peugeot',
         nombre: 'Camisas + Pistones',
-        modelo: ['301', 'xud9', 'tud5', 'tu3', 'dw8'],
+        modelo: ['xud9'],
         precio: 450.00,
         imagenes: [
             'Piezas/Peugeot/Camisas + Pistones.png'
