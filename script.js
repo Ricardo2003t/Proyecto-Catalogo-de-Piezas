@@ -85,8 +85,8 @@ const productos = [
     {
         marca: 'peugeot',
         nombre: 'Camisas + Pistones',
-        modelo: ['301', 'xud9', 'tud5', 'tu3', 'dvv8'],
-        precio: 1.00,
+        modelo: ['301', 'xud9', 'tud5', 'tu3', 'dw8'],
+        precio: 450.00,
         imagenes: [
             'Piezas/Peugeot/Camisas + Pistones.png'
         ],
@@ -96,18 +96,30 @@ const productos = [
     },
     {
         marca: 'peugeot',
+        nombre: 'Pistones + Aroz + Pasadores + Camisas DW8',
+        modelo: ['dw8'],
+        precio: 300.00,
+        imagenes: [
+            
+        ],
+        descripcion: 'Oferta especial: Kit combinado de pistones aros pasador + camisas para motor DW8. Ahorra $150 comprando ambos componentes juntos. Máxima compatibilidad y rendimiento garantizado.',
+        disponible: true,
+        oferta: true
+    },
+    {
+        marca: 'peugeot',
         nombre: 'Junta de Block Metal',
-        modelo: ['dvv8', 'xud9'],
-        precio: 1.00,
+        modelo: ['dw8', 'xud9'],
+        precio: 35.00,
         imagenes: ['Piezas/Peugeot/Junta de Block Metal DVV8 XUD9.png'],
-        descripcion: 'Junta de block metal de alta calidad para motores DVV8 y XUD9.',
+        descripcion: 'Junta de block metal de alta calidad para motores DW8 y XUD9.',
         disponible: true
     },
     {
         marca: 'peugeot',
         nombre: 'Kit Clutch',
         modelo: ['tud5'],
-        precio: 1.00,
+        precio: 130.00,
         imagenes: ['Piezas/Peugeot/Kit Clutch TUD5.png'],
         descripcion: 'Kit completo de embrague para motor TUD5.',
         disponible: true
@@ -116,7 +128,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Kit de Retenes',
         modelo: ['universal'],
-        precio: 1.00,
+        precio: 35.00,
         imagenes: ['Piezas/Peugeot/Kit de Retenes (peugeot).png'],
         descripcion: 'Kit completo de retenes para motores Peugeot.',
         disponible: true
@@ -124,17 +136,17 @@ const productos = [
     {
         marca: 'peugeot',
         nombre: 'Kit Distribución',
-        modelo: ['dvv8'],
-        precio: 1.00,
+        modelo: ['dw8'],
+        precio: 95.00,
         imagenes: ['Piezas/Peugeot/Kit Distribucion DVV8.png'],
-        descripcion: 'Kit de distribución completo para motor DVV8.',
+        descripcion: 'Kit de distribución completo para motor DW8.',
         disponible: true
     },
     {
         marca: 'peugeot',
         nombre: 'Kit Distribución',
         modelo: ['tud5'],
-        precio: 1.00,
+        precio: 95.00,
         imagenes: ['Piezas/Peugeot/Kit Distribucion TUD5.png'],
         descripcion: 'Kit de distribución completo para motor TUD5.',
         disponible: true
@@ -143,7 +155,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Kit Distribución',
         modelo: ['xud7', 'xud9'],
-        precio: 1.00,
+        precio: 95.00,
         imagenes: ['Piezas/Peugeot/Kit Distribucion XUD9 XUD7.png'],
         descripcion: 'Kit de distribución completo para motores XUD7 y XUD9.',
         disponible: true
@@ -152,7 +164,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Líquido Freno',
         modelo: ['otras'],
-        precio: 1.00,
+        precio: 10.00,
         imagenes: ['Piezas/Peugeot/Liquido Freno (1 litro).PNG'],
         descripcion: 'Líquido de freno de 1 litro, especificación DOT 4.',
         disponible: true
@@ -160,17 +172,26 @@ const productos = [
     {
         marca: 'peugeot',
         nombre: 'Metales de Biela y Bancada',
-        modelo: ['tud5', 'xud9', 'dvv8', 'tu5jp4'],
-        precio: 1.00,
+        modelo: ['tud5', 'xud9', 'dw8'],
+        precio: 80.00,
         imagenes: ['Piezas/Peugeot/Metales de Biela y Bancada TUD5 XUD9 XUD9turbo DVV8 TU5JP4(301).png'],
-        descripcion: 'Metales de biela y bancada para múltiples motores Peugeot.',
+        descripcion: 'Metales de biela y bancada para motores TUD5, XUD9 y DW8. Precisión y resistencia garantizadas.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Metales de Biela y Bancada XUD9 Turbo y TU5JP4 (301)',
+        modelo: ['xud9turbo', 'tu5jp4'],
+        precio: 90.00,
+        imagenes: ['Piezas/Peugeot/Metales de Biela y Bancada TUD5 XUD9 XUD9turbo DVV8 TU5JP4(301).png'],
+        descripcion: 'Metales de biela y bancada para motores XUD9 Turbo y TU5JP4 (301). Diseñados para máximo rendimiento y durabilidad.',
         disponible: true
     },
     {
         marca: 'peugeot',
         nombre: 'Motor de Arranque',
         modelo: ['tud5', 'tu5jp4'],
-        precio: 1.00,
+        precio: 130.00,
         imagenes: ['Piezas/Peugeot/Motor Aranque TUD5 TU5JP4(301).png'],
         descripcion: 'Motor de arranque para motores TUD5 y TU5JP4.',
         disponible: true
@@ -178,29 +199,29 @@ const productos = [
     {
         marca: 'peugeot',
         nombre: 'Motor de Arranque',
-        modelo: ['xud7', 'xud9', 'dvv8'],
-        precio: 1.00,
+        modelo: ['xud7', 'xud9', 'dw8'],
+        precio: 140.00,
         imagenes: ['Piezas/Peugeot/Motor Aranque XUD9 DVV8 XUD7.png'],
-        descripcion: 'Motor de arranque para motores XUD7, XUD9 y DVV8.',
+        descripcion: 'Motor de arranque para motores XUD7, XUD9 y DW8.',
         disponible: true
     },
     {
         marca: 'peugeot',
         nombre: 'Pistones Aros Pasador',
-        modelo: ['tud5', 'dvv8', 'xud9'],
-        precio: 1.00,
+        modelo: ['tud5', 'dw8', 'xud9'],
+        precio: 290.00,
         imagenes: [
             'Piezas/Peugeot/Piston Aros Pasador TUD5 DVV8 XUD9 (foto1).png',
             'Piezas/Peugeot/Piston Aros Pasador TUD5 DVV8 XUD9 (foto2).png'
         ],
-        descripcion: 'Kit de pistones, aros y pasadores para motores TUD5, DVV8 y XUD9.',
+        descripcion: 'Kit de pistones, aros y pasadores para motores TUD5, DW8 y XUD9.',
         disponible: true
     },
     {
         marca: 'peugeot',
         nombre: 'Pulmón Presión Aceite',
         modelo: ['universal'],
-        precio: 1.00,
+        precio: 15.00,
         imagenes: ['Piezas/Peugeot/Pulmon Pesion Aceite (peugeot).png'],
         descripcion: 'Pulmón de presión de aceite para motores Peugeot.',
         disponible: true
@@ -209,7 +230,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Radiador',
         modelo: ['301'],
-        precio: 1.00,
+        precio: 130.00,
         imagenes: ['Piezas/Peugeot/Radiador 301.png'],
         descripcion: 'Radiador refrigerante para motor 301.',
         disponible: true
@@ -217,56 +238,56 @@ const productos = [
     {
         marca: 'peugeot',
         nombre: 'Retenes de Bastón',
-        modelo: ['xud9', 'dvv8'],
-        precio: 1.00,
+        modelo: ['xud9', 'dw8'],
+        precio: 10.00,
         imagenes: [
             'Piezas/Peugeot/Retenes de Baston XUD9 DVV8 (foto1).png',
             'Piezas/Peugeot/Retenes de Baston XUD9 DVV8 (foto2).png'
         ],
-        descripcion: 'Retenes de bastón para motores XUD9 y DVV8.',
+        descripcion: 'Retenes de bastón para motores XUD9 y DW8.',
         disponible: true
     },
     {
         marca: 'peugeot',
         nombre: 'Tornillos Block',
-        modelo: ['xud9', 'dvv8'],
-        precio: 1.00,
+        modelo: ['xud9', 'dw8'],
+        precio: 50.00,
         imagenes: ['Piezas/Peugeot/Tornillos Block XUD9 DVV8.PNG'],
-        descripcion: 'Set de tornillos de block para motores XUD9 y DVV8.',
+        descripcion: 'Set de tornillos de block para motores XUD9 y DW8.',
         disponible: true
     },
     {
         marca: 'peugeot',
-        nombre: 'Aceite Caja Automática',
+        nombre: 'Aceite Caja Automática 1L',
         modelo: ['otras'],
-        precio: 1.00,
+        precio: 12.00,
         imagenes: ['Piezas/Peugeot/Aceite Caja Automatica.PNG'],
-        descripcion: 'Aceite para cajas de cambio automáticas.',
+        descripcion: 'Aceite para cajas de cambio automáticas. 1 Litro',
         disponible: true
     },
     {
         marca: 'peugeot',
         nombre: 'Aceite Caja Mecánica 4L',
         modelo: ['otras'],
-        precio: 1.00,
+        precio: 25.00,
         imagenes: ['Piezas/Peugeot/Aceite Caja Mecanica (4 litros).PNG'],
         descripcion: 'Aceite para cajas de cambio mecánicas, 4 litros.',
         disponible: true
     },
     {
         marca: 'peugeot',
-        nombre: 'Aceite Motor 10W-40',
+        nombre: 'Aceite Motor 10W-40 1L',
         modelo: ['otras'],
-        precio: 1.00,
+        precio: 9.00,
         imagenes: ['Piezas/Peugeot/Aceite Motor 10W-40 (1 litro).PNG'],
         descripcion: 'Aceite motor 10W-40, 1 litro.',
         disponible: true
     },
     {
         marca: 'peugeot',
-        nombre: 'Aceite Motor 15W-40',
+        nombre: 'Aceite Motor 15W-40 5L',
         modelo: ['otras'],
-        precio: 1.00,
+        precio: 25.00,
         imagenes: ['Piezas/Peugeot/Aceite Motor 15W-40 (5 litros).PNG'],
         descripcion: 'Aceite motor 15W-40, 5 litros.',
         disponible: true
@@ -275,7 +296,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Aceite Motor 20W-50 1L',
         modelo: ['otras'],
-        precio: 1.00,
+        precio: 9.00,
         imagenes: ['Piezas/Peugeot/Aceite Motor 20W-50 (1 litro).PNG'],
         descripcion: 'Aceite motor 20W-50, 1 litro.',
         disponible: true
@@ -284,37 +305,49 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Aceite Motor 20W-50 5L',
         modelo: ['otras'],
-        precio: 1.00,
+        precio: 25.00,
         imagenes: ['Piezas/Peugeot/Aceite Motor 20W-50 (5 litros).PNG'],
         descripcion: 'Aceite motor 20W-50, 5 litros.',
         disponible: true
     },
     {
         marca: 'peugeot',
-        nombre: 'Arandelas de Traslado',
-        modelo: ['tud5', 'xud9', 'dvv8'],
-        precio: 1.00,
+        nombre: 'Arandelas de Traslado TUD5',
+        modelo: ['tud5'],
+        precio: 20.00,
         imagenes: [
             'Piezas/Peugeot/Arandelas de Traslado TUD5 XUD9 DVV8 XUD9turbo (foto1).png',
             'Piezas/Peugeot/Arandelas de Traslado TUD5 XUD9 DVV8 XUD9turbo (foto2).png'
         ],
-        descripcion: 'Arandelas de traslado para motores TUD5, XUD9 y DVV8.',
+        descripcion: 'Arandelas de traslado para motor TUD5. Fabricadas con materiales resistentes y de alta precisión.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Arandelas de Traslado XUD9 DW8',
+        modelo: ['xud9', 'xud9turbo', 'dw8'],
+        precio: 25.00,
+        imagenes: [
+            'Piezas/Peugeot/Arandelas de Traslado TUD5 XUD9 DVV8 XUD9turbo (foto1).png',
+            'Piezas/Peugeot/Arandelas de Traslado TUD5 XUD9 DVV8 XUD9turbo (foto2).png'
+        ],
+        descripcion: 'Arandelas de traslado para motores XUD9, XUD9 Turbo y DW8. Fabricadas con materiales resistentes y de alta precisión.',
         disponible: true
     },
     {
         marca: 'peugeot',
         nombre: 'Árbol de Levas',
-        modelo: ['xud7', 'xud9', 'dvv8'],
-        precio: 1.00,
+        modelo: ['xud7', 'xud9', 'dw8'],
+        precio: 120.00,
         imagenes: ['Piezas/Peugeot/Arbol Levas XUD7 XUD9 DVV8.png'],
-        descripcion: 'Árbol de levas para motores XUD7, XUD9 y DVV8.',
+        descripcion: 'Árbol de levas para motores XUD7, XUD9 y DW8.',
         disponible: true
     },
     {
         marca: 'peugeot',
         nombre: 'Bobina Encendida',
         modelo: ['301'],
-        precio: 1.00,
+        precio: 95.00,
         imagenes: ['Piezas/Peugeot/Bobina Encendida 301.png'],
         descripcion: 'Bobina de encendido para motor 301.',
         disponible: true
@@ -322,17 +355,35 @@ const productos = [
     {
         marca: 'peugeot',
         nombre: 'Aros de Pistón',
-        modelo: ['tud5', 'xud9', 'dvv8', 'tu5jp4'],
-        precio: 1.00,
+        modelo: ['tud5', 'xud9', 'dw8'],
+        precio: 85.00,
         imagenes: ['Piezas/Peugeot/Aros de Piston  TUD5 XUD9 XUD9Turbo DVV8 TU5JP4(301).png'],
-        descripcion: 'Aros de pistón para múltiples motores Peugeot.',
+        descripcion: 'Aros de pistón de alta calidad para motores TUD5, XUD9, XUD9 Turbo y DW8. Garantizan sellado perfecto y máxima compresión. Fabricados con materiales resistentes a altas temperaturas.',
+        disponible: true
+    },
+     {
+        marca: 'peugeot',
+        nombre: 'Aros de Pistón TU5JP4',
+        modelo: ['tu5jp4'],
+        precio: 100.00,
+        imagenes: ['Piezas/Peugeot/Aros de Piston  TUD5 XUD9 XUD9Turbo DVV8 TU5JP4(301).png'],
+        descripcion: 'Aros de pistón específicos para motor TU5JP4. Diseño optimizado para máximo rendimiento y durabilidad. Compatibles con inyección de gasolina.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Aros de Pistón XUD9 Turbo',
+        modelo: ['xud9turbo'],
+        precio: 95.00,
+        imagenes: ['Piezas/Peugeot/Aros de Piston  TUD5 XUD9 XUD9Turbo DVV8 TU5JP4(301).png'],
+        descripcion: 'Aros de pistón de alta calidad específicos para motor XUD9 Turbo. Diseñados para soportar presiones elevadas y máximo rendimiento. Garantizan sellado perfecto y máxima compresión. Fabricados con materiales resistentes a altas temperaturas.',
         disponible: true
     },
     {
         marca: 'peugeot',
         nombre: 'Bomba de Agua',
         modelo: ['t1', 'tu3'],
-        precio: 1.00,
+        precio: 35.00,
         imagenes: ['Piezas/Peugeot/Bomba Agua T1 TU3.png'],
         descripcion: 'Bomba de agua para motores T1 y TU3.',
         disponible: true
@@ -341,7 +392,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Bomba de Agua',
         modelo: ['tud5', 'tu5jp4'],
-        precio: 1.00,
+        precio: 40.00,
         imagenes: ['Piezas/Peugeot/Bomba Agua TUD5 TUD5JP4(301).png'],
         descripcion: 'Bomba de agua para motores TUD5 y TU5JP4.',
         disponible: true
@@ -350,7 +401,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Brazos Cremallera',
         modelo: ['301'],
-        precio: 1.00,
+        precio: 40.00,
         imagenes: ['Piezas/Peugeot/Brazos Cremallera 301.PNG'],
         descripcion: 'Brazos de cremallera para motor 301.',
         disponible: true
@@ -359,7 +410,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Brazos Cremallera',
         modelo: ['405'],
-        precio: 1.00,
+        precio: 40.00,
         imagenes: ['Piezas/Peugeot/Brazos Cremallera 405.PNG'],
         descripcion: 'Brazos de cremallera para motor 405.',
         disponible: true
@@ -368,25 +419,34 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Bujías de Precalentamiento',
         modelo: ['xud9'],
-        precio: 1.00,
+        precio: 35.00,
         imagenes: ['Piezas/Peugeot/Bujias de Precalentamiento XUD9.png'],
         descripcion: 'Bujías de precalentamiento para motor XUD9.',
         disponible: true
     },
     {
         marca: 'peugeot',
-        nombre: 'Camisas',
-        modelo: ['tud5', 'xud9', 'dvv8'],
-        precio: 1.00,
+        nombre: 'Camisas TUD5',
+        modelo: ['tud5'],
+        precio: 180.00,
         imagenes: ['Piezas/Peugeot/Camisas TUD5 XUD9 DVV8.png'],
-        descripcion: 'Camisas de cilindro para motores TUD5, XUD9 y DVV8.',
+        descripcion: 'Camisas de cilindro para motor TUD5. Precisión superior y resistencia a altas temperaturas.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Camisas XUD9 y DVV8',
+        modelo: ['xud9', 'dvv8'],
+        precio: 160.00,
+        imagenes: ['Piezas/Peugeot/Camisas TUD5 XUD9 DVV8.png'],
+        descripcion: 'Camisas de cilindro para motores XUD9 y DVV8. Material de primera calidad con excelente durabilidad.',
         disponible: true
     },
     {
         marca: 'peugeot',
         nombre: 'Correa Distribución 136 140 141',
         modelo: ['otras'],
-        precio: 1.00,
+        precio: 35.00,
         imagenes: [
             'Piezas/Peugeot/Correa Distribucion 136 , 140 , 141  (foto1).png',
             'Piezas/Peugeot/Correa Distribucion 136 , 140 , 141  (foto2).png'
@@ -398,7 +458,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Cubo de Rueda',
         modelo: ['205', '206', '207', '308', '306', '307', '309', '405', '406', 'partner'],
-        precio: 1.00,
+        precio: 80.00,
         imagenes: [
             'Piezas/Peugeot/Cubo de Rueda (Peugeo citroent) (foto1) 205 206 207 308 306 307 309 405 406 Partner.png',
             'Piezas/Peugeot/Cubo de Rueda (Peugeo citroent) (foto3) 205 206 207 308 306 307 309 405 406 Partner.png',
@@ -411,17 +471,17 @@ const productos = [
     {
         marca: 'peugeot',
         nombre: 'Dampers',
-        modelo: ['dvv8'],
-        precio: 1.00,
+        modelo: ['dw8'],
+        precio: 70.00,
         imagenes: ['Piezas/Peugeot/Dampers DVV8.png'],
-        descripcion: 'Amortiguadores para motor DVV8.',
+        descripcion: 'Amortiguadores para motor DW8.',
         disponible: true
     },
     {
         marca: 'peugeot',
         nombre: 'Dampers',
         modelo: ['tud5'],
-        precio: 1.00,
+        precio: 70.00,
         imagenes: ['Piezas/Peugeot/Dampers TUD5.png'],
         descripcion: 'Amortiguadores para motor TUD5.',
         disponible: true
@@ -430,7 +490,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Dampers',
         modelo: ['xud7', 'xud9'],
-        precio: 1.00,
+        precio: 70.00,
         imagenes: ['Piezas/Peugeot/Dampers XUD9 XUD7.png'],
         descripcion: 'Amortiguadores para motores XUD7 y XUD9.',
         disponible: true
@@ -439,7 +499,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Electroventilador',
         modelo: ['301'],
-        precio: 1.00,
+        precio: 100.00,
         imagenes: ['Piezas/Peugeot/Electroventilador (peugeot) 301 Citroen.png'],
         descripcion: 'Electroventilador para motor 301.',
         disponible: true
@@ -448,7 +508,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Filtro de Petróleo',
         modelo: ['tud5'],
-        precio: 1.00,
+        precio: 15.00,
         imagenes: ['Piezas/Peugeot/Filtro Petroleo TUD5.png'],
         descripcion: 'Filtro de petróleo para motor TUD5.',
         disponible: true
@@ -457,7 +517,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Junta Block Amianto',
         modelo: ['tud5'],
-        precio: 1.00,
+        precio: 25.00,
         imagenes: ['Piezas/Peugeot/Junta Block Amianto TUD5.png'],
         descripcion: 'Junta de block de amianto para motor TUD5.',
         disponible: true
@@ -466,7 +526,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Junta Block Metal',
         modelo: ['tud5'],
-        precio: 1.00,
+        precio: 40.00,
         imagenes: ['Piezas/Peugeot/Junta Block Metal TUD5.png'],
         descripcion: 'Junta de block de metal para motor TUD5.',
         disponible: true
@@ -475,7 +535,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Junta de Balancines',
         modelo: ['xud9'],
-        precio: 1.00,
+        precio: 10.00,
         imagenes: [
             'Piezas/Peugeot/Junta de Balancines XUD9 (foto1).png',
             'Piezas/Peugeot/Junta de Balancines XUD9 (foto2).png'
@@ -486,10 +546,10 @@ const productos = [
     {
         marca: 'peugeot',
         nombre: 'Junta de Block Amianto',
-        modelo: ['dvv8', 'xud9'],
-        precio: 1.00,
+        modelo: ['dw8', 'xud9'],
+        precio: 25.00,
         imagenes: ['Piezas/Peugeot/Junta de Block Amianto DVV8 XUD9.png'],
-        descripcion: 'Junta de block de amianto para motores DVV8 y XUD9.',
+        descripcion: 'Junta de block de amianto para motores DW8 y XUD9.',
         disponible: true
     }
 ];
