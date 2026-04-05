@@ -19,6 +19,7 @@ const DEVICE_INFO = {
 // VARIABLE GLOBAL PARA BÚSQUEDA ACTUAL
 // ========================================
 let ultimaBusqueda = ''; // Guarda el término de búsqueda actual para priorizar fotos
+let scrollPositionBeforeModal = 0; // Guarda la posición del scroll antes de abrir el modal
 
 // ========================================
 // MANEJO DE NAVEGACIÓN CON PRECARGA
@@ -1759,6 +1760,9 @@ function abrirModal(producto) {
         whatsappBtn.classList.add('hidden');
     }
     
+    // Guardar la posición del scroll antes de abrir el modal
+    scrollPositionBeforeModal = window.scrollY || window.pageYOffset;
+    
     document.getElementById('modal-producto').classList.remove('hidden');
     document.getElementById('modal-producto').classList.add('flex');
 }
@@ -1818,6 +1822,13 @@ function cerrarModal() {
     // Mostrar filtros nuevamente
     document.querySelector('.filtro-tabs').style.display = 'block';
     document.querySelector('.filtro-tabs-modelos').style.display = 'block';
+    
+    // Restaurar la posición del scroll
+    window.scrollTo({
+        top: scrollPositionBeforeModal,
+        left: 0,
+        behavior: 'auto' // Sin animación para restaurar instantáneamente
+    });
 }
 
 // Navegación suave
