@@ -1,4 +1,21 @@
 // ========================================
+// DETECCIÓN DE DISPOSITIVOS Y NAVEGADORES
+// ========================================
+const DEVICE_INFO = {
+    isIOS: /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream,
+    isAndroid: /Android/.test(navigator.userAgent),
+    isMobile: /Mobile|Android|iPhone|iPad|iPod/.test(navigator.userAgent),
+    isTablet: /iPad|Android(?!.*Mobile)/.test(navigator.userAgent),
+    hasIntersectionObserver: 'IntersectionObserver' in window,
+    isSafari: /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent),
+    iosMajorVersion: (function() {
+        if (!/iPad|iPhone|iPod/.test(navigator.userAgent)) return null;
+        const match = navigator.userAgent.match(/OS (\d+)_/);
+        return match ? parseInt(match[1]) : null;
+    })()
+};
+
+// ========================================
 // MANEJO DE MAPS PARA iOS Y ANDROID
 // ========================================
 function abrirMapa(event) {
@@ -12,10 +29,7 @@ function abrirMapa(event) {
     const lon = -82.429631;
     const nombre = 'Catálogo de Repuestos';
     
-    // Detectar iOS
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    
-    if (isIOS) {
+    if (DEVICE_INFO.isIOS) {
         // Apple Maps para iOS
         const appleMapURL = `maps://maps.apple.com/?ll=${lat},${lon}&q=${encodeURIComponent(nombre)}`;
         
@@ -746,6 +760,19 @@ let marcaActiva = 'todos';
 let productosAMostrar = productos;
 const WHATSAPP_NUMBER = '+5352531473';
 
+// Variables para carga progresiva (infinite scroll)
+let productosCargados = DEVICE_INFO.isMobile ? 4 : 8; // 4 en móvil, 8 en desktop
+const PRODUCTOS_POR_CARGA = 4; // Siempre 4 por carga
+let observerInfiniteScroll = null;
+
+// Variables para scroll fallback (para iOS antiguo)
+let scrollDebounceTimer = null;
+let lastScrollPosition = 0;
+const SCROLL_DEBOUNCE_MS = 500; // 500ms debounce para móvil
+
+// Flag para indicar si estamos en proceso de carga
+let isLoadingMore = false;
+
 // Obtener todos los modelos únicos disponibles
 function obtenerModelosDisponibles() {
     const modelos = new Set();
@@ -788,6 +815,11 @@ function actualizarModelosVisibles(marca) {
 
 // Inicializar cuando el DOM está listo
 document.addEventListener('DOMContentLoaded', function() {
+    // Optimizaciones para iOS
+    if (DEVICE_INFO.isIOS) {
+        optimizarParaIOS();
+    }
+    
     cargarProductos();
     configurarEventos();
     configurarMenuHamburger();
@@ -964,6 +996,51 @@ function configurarMenuHamburger() {
     });
 }
 
+// ========================================
+// OPTIMIZACIONES PARA iOS
+// ========================================
+function optimizarParaIOS() {
+    // Agregar viewport-fit para evitar notch issues
+    let viewportMeta = document.querySelector('meta[name="viewport"]');
+    if (!viewportMeta) {
+        viewportMeta = document.createElement('meta');
+        viewportMeta.setAttribute('name', 'viewport');
+        document.head.appendChild(viewportMeta);
+    }
+    viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0');
+    
+    // Prevenir zoom en inputs en iOS
+    document.addEventListener('touchstart', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+            e.target.style.fontSize = '16px'; // Prevenir zoom
+        }
+    });
+    
+    // Optimizar performance: desactivar algunas animaciones si es iOS antiguo
+    if (DEVICE_INFO.iosMajorVersion && DEVICE_INFO.iosMajorVersion < 13) {
+        document.documentElement.style.setProperty('--animation-duration', '0.1s');
+        document.body.classList.add('ios-legacy');
+    }
+    
+    // Prevenir memory leak: limpiar cuando la app entra en background
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            // App en background - limpiar recursos
+            if (observerInfiniteScroll) {
+                observerInfiniteScroll.disconnect();
+            }
+        }
+    });
+    
+    // Optimizar rendering: usar CSS will-change selectivamente
+    const productosGrid = document.getElementById('productos-grid');
+    if (productosGrid) {
+        productosGrid.style.willChange = 'contents';
+    }
+    
+    console.log(`[iOS] Optimizaciones activadas - Versión: ${DEVICE_INFO.iosMajorVersion || 'Desconocida'}`);
+}
+
 // Efecto de scroll
 function agregarEfectoScroll() {
     window.addEventListener('scroll', function() {
@@ -976,87 +1053,152 @@ function agregarEfectoScroll() {
     });
 }
 
-// Configurar filtros sticky
+// Configurar filtros sticky - Aparece en header cuando el scroll PARA
 function configurarFiltrosSticky() {
     const filtroTabs = document.querySelector('.filtro-tabs');
     const filtroTabsModelos = document.querySelector('.filtro-tabs-modelos');
-    const productosSection = document.querySelector('.productos');
+    const header = document.querySelector('header');
     
-    if (!filtroTabs || !productosSection) return;
+    if (!filtroTabs || !filtroTabsModelos || !header) return;
     
-    // Inicializar con fondo transparente
-    filtroTabs.style.opacity = '1';
-    filtroTabs.style.backgroundColor = 'transparent';
-    filtroTabsModelos.style.opacity = '1';
-    filtroTabsModelos.style.backgroundColor = 'transparent';
+    let lastScrollY = 0;
+    let scrollTimeout = null;
+    let isMenuShowing = false;
+    let headerHeight = 0;
+    let tabsHeight = 0;
+    let modelosHeight = 0;
     
-    let isFixed = false;
+    // Función para recalcular alturas dinámicamente
+    function actualizarAlturas() {
+        headerHeight = header.offsetHeight;
+        tabsHeight = filtroTabs.offsetHeight;
+        modelosHeight = filtroTabsModelos.offsetHeight;
+        
+        // Actualizar posiciones de los menús
+        filtroTabs.style.top = headerHeight + 'px';
+        filtroTabsModelos.style.top = (headerHeight + tabsHeight) + 'px';
+    }
+    
+    function mostrarMenuEnHeader() {
+        if (isMenuShowing) return;
+        isMenuShowing = true;
+        
+        filtroTabs.style.opacity = '1';
+        filtroTabsModelos.style.opacity = '1';
+        filtroTabs.style.pointerEvents = 'auto';
+        filtroTabsModelos.style.pointerEvents = 'auto';
+    }
+    
+    function ocultarMenuDelHeader() {
+        if (!isMenuShowing) return;
+        isMenuShowing = false;
+        
+        filtroTabs.style.opacity = '0';
+        filtroTabsModelos.style.opacity = '0';
+        filtroTabs.style.pointerEvents = 'none';
+        filtroTabsModelos.style.pointerEvents = 'none';
+    }
+    
+    // Configurar menus como fixed en el header desde el inicio
+    filtroTabs.style.position = 'fixed';
+    filtroTabs.style.left = '0';
+    filtroTabs.style.right = '0';
+    filtroTabs.style.width = '100%';
+    filtroTabs.style.zIndex = '90';
+    filtroTabs.style.backgroundColor = '#ffffff';
+    filtroTabs.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
+    filtroTabs.style.transition = 'opacity 0.2s ease';
+    filtroTabs.style.opacity = '0';
+    filtroTabs.style.pointerEvents = 'none';
+    filtroTabs.style.boxSizing = 'border-box';
+    
+    filtroTabsModelos.style.position = 'fixed';
+    filtroTabsModelos.style.left = '0';
+    filtroTabsModelos.style.right = '0';
+    filtroTabsModelos.style.width = '100%';
+    filtroTabsModelos.style.zIndex = '90';
+    filtroTabsModelos.style.backgroundColor = '#ffffff';
+    filtroTabsModelos.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
+    filtroTabsModelos.style.transition = 'opacity 0.2s ease';
+    filtroTabsModelos.style.opacity = '0';
+    filtroTabsModelos.style.pointerEvents = 'none';
+    filtroTabsModelos.style.boxSizing = 'border-box';
+    
+    // Inicializar alturas
+    actualizarAlturas();
+    
+    // Recalcular alturas cuando la ventana cambia de tamaño
+    window.addEventListener('resize', function() {
+        actualizarAlturas();
+    }, { passive: true });
+    
+    // Recalcular alturas cuando orientation cambia (iOS)
+    window.addEventListener('orientationchange', function() {
+        setTimeout(() => {
+            actualizarAlturas();
+        }, 100);
+    }, { passive: true });
+    
+    let scrollTicking = false;
     
     window.addEventListener('scroll', function() {
-        const productoRect = productosSection.getBoundingClientRect().top;
-        const headerHeight = document.querySelector('header').offsetHeight;
+        const currentScrollY = window.scrollY;
         
-        // Si la sección de productos está por encima del viewport
-        if (productoRect <= headerHeight && !isFixed) {
-            isFixed = true;
-            filtroTabs.style.position = 'fixed';
-            filtroTabs.style.top = headerHeight + 'px';
-            filtroTabs.style.left = '0';
-            filtroTabs.style.right = '0';
-            filtroTabs.style.width = '100%';
-            filtroTabs.style.zIndex = '90';
-            filtroTabs.style.backgroundColor = '#ffffff';
-            filtroTabs.style.boxSizing = 'border-box';
-            filtroTabs.style.opacity = '1';
-            filtroTabs.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
-            filtroTabs.classList.add('fixed-animated');
-            
-            filtroTabsModelos.style.position = 'fixed';
-            filtroTabsModelos.style.top = (headerHeight + filtroTabs.offsetHeight) + 'px';
-            filtroTabsModelos.style.left = '0';
-            filtroTabsModelos.style.right = '0';
-            filtroTabsModelos.style.width = '100%';
-            filtroTabsModelos.style.zIndex = '90';
-            filtroTabsModelos.style.backgroundColor = '#ffffff';
-            filtroTabsModelos.style.boxSizing = 'border-box';
-            filtroTabsModelos.style.opacity = '1';
-            filtroTabsModelos.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
-            filtroTabsModelos.classList.add('fixed-animated');
-        } else if (productoRect > headerHeight && isFixed) {
-            isFixed = false;
-            filtroTabs.style.position = 'static';
-            filtroTabs.style.width = 'auto';
-            filtroTabs.style.opacity = '1';
-            filtroTabs.style.boxShadow = 'none';
-            filtroTabs.style.backgroundColor = 'transparent';
-            filtroTabs.classList.remove('fixed-animated');
-            
-            filtroTabsModelos.style.position = 'static';
-            filtroTabsModelos.style.width = 'auto';
-            filtroTabsModelos.style.opacity = '1';
-            filtroTabsModelos.style.boxShadow = 'none';
-            filtroTabsModelos.style.backgroundColor = 'transparent';
-            filtroTabsModelos.classList.remove('fixed-animated');
+        // Usar requestAnimationFrame para mejor performance en móviles
+        if (!scrollTicking) {
+            scrollTicking = true;
+            requestAnimationFrame(function() {
+                // Si está scrolleando (scrollY cambió), ocultar el menú
+                if (Math.abs(currentScrollY - lastScrollY) > 5) {
+                    ocultarMenuDelHeader();
+                    lastScrollY = currentScrollY;
+                }
+                
+                scrollTicking = false;
+            });
         }
-    });
+        
+        // Limpiar timeout anterior
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+        
+        // Si deja de scrollear por 300ms, mostrar el menú
+        scrollTimeout = setTimeout(() => {
+            // Recalcular alturas por si cambió algo
+            actualizarAlturas();
+            
+            if (currentScrollY > 100) {  // Solo si está lo suficientemente abajo
+                mostrarMenuEnHeader();
+            } else {
+                // Si está muy arriba, ocultar
+                ocultarMenuDelHeader();
+                isMenuShowing = false;
+            }
+        }, 300);
+        
+    }, { passive: true });
 }
 
 
-// Cargar productos en tarjetas
+// Cargar productos en tarjetas con paginación - Optimizado para móviles
 function cargarProductos() {
     const grid = document.getElementById('productos-grid');
     const sinResultados = document.getElementById('sin-resultados');
     
-    grid.innerHTML = '';
-    
     if (productosAMostrar.length === 0) {
+        grid.innerHTML = '';
         sinResultados.classList.remove('hidden');
         return;
     }
     
     sinResultados.classList.add('hidden');
     
-    productosAMostrar.forEach((producto, index) => {
+    // Limpiar grid e iniciar desde cero
+    grid.innerHTML = '';
+    
+    // Mostrar solo los productos hasta el límite de productosCargados
+    const productosARenderirzar = productosAMostrar.slice(0, productosCargados);
+    
+    productosARenderirzar.forEach((producto, index) => {
         const card = document.createElement('div');
         const disponible = producto.disponible !== false;
         card.className = `producto-card ${!disponible ? 'no-disponible' : ''}`;
@@ -1119,6 +1261,85 @@ function cargarProductos() {
         card.addEventListener('click', () => abrirModal(producto));
         grid.appendChild(card);
     });
+    
+    // Agregar elemento trigger para infinite scroll si hay más productos por cargar
+    if (productosCargados < productosAMostrar.length) {
+        const triggerElement = document.createElement('div');
+        triggerElement.id = 'infinite-scroll-trigger';
+        triggerElement.style.height = '20px'; // Elemento pequeño para detectar
+        triggerElement.style.visibility = 'hidden';
+        triggerElement.style.width = '100%';
+        triggerElement.setAttribute('data-trigger', 'true');
+        grid.appendChild(triggerElement);
+        
+        // Usar IntersectionObserver si está disponible, sino usar scroll fallback
+        if (DEVICE_INFO.hasIntersectionObserver && DEVICE_INFO.iosMajorVersion !== null && DEVICE_INFO.iosMajorVersion < 12) {
+            // iOS 11 y anterior tiene problemas con IntersectionObserver
+            configurarScrollFallback();
+        } else if (DEVICE_INFO.hasIntersectionObserver) {
+            configurarIntersectionObserver(triggerElement);
+        } else {
+            // Fallback para navegadores antiguos
+            configurarScrollFallback();
+        }
+    }
+}
+
+// Configurar IntersectionObserver para móviles modernos
+function configurarIntersectionObserver(triggerElement) {
+    // Limpiar observer anterior si existe
+    if (observerInfiniteScroll) {
+        observerInfiniteScroll.disconnect();
+    }
+    
+    observerInfiniteScroll = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !isLoadingMore && productosCargados < productosAMostrar.length) {
+            isLoadingMore = true;
+            productosCargados += PRODUCTOS_POR_CARGA;
+            
+            // Usar requestAnimationFrame para mejor performance
+            requestAnimationFrame(() => {
+                cargarProductos();
+                isLoadingMore = false;
+            });
+        }
+    }, { 
+        threshold: 0.01,
+        rootMargin: DEVICE_INFO.isMobile ? '100px' : '50px'
+    });
+    
+    observerInfiniteScroll.observe(triggerElement);
+}
+
+// Fallback para scroll manual (iOS antiguo y navegadores sin IntersectionObserver)
+function configurarScrollFallback() {
+    // Remover listener anterior si existe
+    window.removeEventListener('scroll', handleScrollFallback);
+    
+    // Agregar nuevo listener con debounce
+    window.addEventListener('scroll', handleScrollFallback, { passive: true });
+}
+
+function handleScrollFallback() {
+    if (isLoadingMore || productosCargados >= productosAMostrar.length) return;
+    
+    // Debounce: evitar ejecutar muy frecuentemente
+    clearTimeout(scrollDebounceTimer);
+    scrollDebounceTimer = setTimeout(() => {
+        const scrollPosition = window.innerHeight + window.scrollY;
+        const documentHeight = document.documentElement.scrollHeight;
+        
+        // Si estamos cerca del final (últimos 300px), cargar más
+        if (scrollPosition >= documentHeight - 300) {
+            isLoadingMore = true;
+            productosCargados += PRODUCTOS_POR_CARGA;
+            
+            requestAnimationFrame(() => {
+                cargarProductos();
+                isLoadingMore = false;
+            });
+        }
+    }, SCROLL_DEBOUNCE_MS);
 }
 
 // Configurar carrusel con soporte para swipe
@@ -1334,6 +1555,19 @@ function filtrarProductos() {
         } else {
             productosAMostrar = productosConPuntuacion.map(item => item.producto);
         }
+    }
+    
+    // Resetear contador de paginación al filtrar
+    isLoadingMore = false;
+    productosCargados = DEVICE_INFO.isMobile ? 4 : 8;
+    
+    // Limpiar scroll debounce timer
+    clearTimeout(scrollDebounceTimer);
+    
+    // Limpiar observer anterior
+    if (observerInfiniteScroll) {
+        observerInfiniteScroll.disconnect();
+        observerInfiniteScroll = null;
     }
     
     cargarProductos();
