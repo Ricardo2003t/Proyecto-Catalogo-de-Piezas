@@ -33,10 +33,8 @@ function abrirMapa(event) {
         // Apple Maps para iOS
         const appleMapURL = `maps://maps.apple.com/?ll=${lat},${lon}&q=${encodeURIComponent(nombre)}`;
         
-        // Intentar abrir Apple Maps
-        setTimeout(() => {
-            window.location.href = appleMapURL;
-        }, 100);
+        // Intentar abrir Apple Maps de forma segura, sin bloquear el navegador
+        window.open(appleMapURL, '_blank', 'noopener,noreferrer');
     } else {
         // Google Maps para Android y otros
         window.open('https://maps.app.goo.gl/2Fb35R2ccH1GtYSU8', '_blank', 'noopener,noreferrer');
