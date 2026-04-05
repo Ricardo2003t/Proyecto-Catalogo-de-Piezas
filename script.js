@@ -746,7 +746,7 @@ const productos = [
     {
         marca: 'peugeot',
         nombre: 'Rodamiento Delantero',
-        modelo: ['405'],
+        modelo: ['universal'],
         precio: 30.00,
         imagenes: ['Piezas/Peugeot/Rodamiento Delantero Universal CITROEN.png'],
         descripcion: 'Rodamiento delantero para modelo 405. $30 individual o $60 la pareja.',
