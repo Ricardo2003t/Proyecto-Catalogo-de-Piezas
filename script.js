@@ -1083,19 +1083,37 @@ function configurarFiltrosSticky() {
         if (isMenuShowing) return;
         isMenuShowing = true;
         
-        filtroTabs.style.opacity = '1';
-        filtroTabsModelos.style.opacity = '1';
-        filtroTabs.style.pointerEvents = 'auto';
-        filtroTabsModelos.style.pointerEvents = 'auto';
+        // Agregar clase para animación
+        filtroTabs.classList.add('menu-visible');
+        filtroTabsModelos.classList.add('menu-visible');
+        
+        // Cambiar propiedades con delay escalonado para efecto elegante
+        requestAnimationFrame(() => {
+            filtroTabs.style.opacity = '1';
+            filtroTabs.style.transform = 'translateY(0) scaleY(1)';
+            filtroTabs.style.pointerEvents = 'auto';
+            
+            filtroTabsModelos.style.opacity = '1';
+            filtroTabsModelos.style.transform = 'translateY(0) scaleY(1)';
+            filtroTabsModelos.style.pointerEvents = 'auto';
+        });
     }
     
     function ocultarMenuDelHeader() {
         if (!isMenuShowing) return;
         isMenuShowing = false;
         
+        // Remover clase de animación
+        filtroTabs.classList.remove('menu-visible');
+        filtroTabsModelos.classList.remove('menu-visible');
+        
+        // Desaparecer con transformación elegante
         filtroTabs.style.opacity = '0';
-        filtroTabsModelos.style.opacity = '0';
+        filtroTabs.style.transform = 'translateY(-10px) scaleY(0.95)';
         filtroTabs.style.pointerEvents = 'none';
+        
+        filtroTabsModelos.style.opacity = '0';
+        filtroTabsModelos.style.transform = 'translateY(-10px) scaleY(0.95)';
         filtroTabsModelos.style.pointerEvents = 'none';
     }
     
@@ -1106,9 +1124,10 @@ function configurarFiltrosSticky() {
     filtroTabs.style.width = '100%';
     filtroTabs.style.zIndex = '90';
     filtroTabs.style.backgroundColor = '#ffffff';
-    filtroTabs.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
-    filtroTabs.style.transition = 'opacity 0.2s ease';
+    filtroTabs.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
+    filtroTabs.style.transition = 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease';
     filtroTabs.style.opacity = '0';
+    filtroTabs.style.transform = 'translateY(-10px) scaleY(0.95)';
     filtroTabs.style.pointerEvents = 'none';
     filtroTabs.style.boxSizing = 'border-box';
     
@@ -1118,9 +1137,10 @@ function configurarFiltrosSticky() {
     filtroTabsModelos.style.width = '100%';
     filtroTabsModelos.style.zIndex = '90';
     filtroTabsModelos.style.backgroundColor = '#ffffff';
-    filtroTabsModelos.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
-    filtroTabsModelos.style.transition = 'opacity 0.2s ease';
+    filtroTabsModelos.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.06)';
+    filtroTabsModelos.style.transition = 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease';
     filtroTabsModelos.style.opacity = '0';
+    filtroTabsModelos.style.transform = 'translateY(-10px) scaleY(0.95)';
     filtroTabsModelos.style.pointerEvents = 'none';
     filtroTabsModelos.style.boxSizing = 'border-box';
     
