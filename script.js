@@ -100,7 +100,7 @@ const productos = [
         modelo: ['dw8'],
         precio: 300.00,
         imagenes: [
-            
+            'Piezas/Peugeot/Piston aros pasador Camisas DW8.png'
         ],
         descripcion: 'Oferta especial: Kit combinado de pistones aros pasador + camisas para motor DW8. Ahorra $150 comprando ambos componentes juntos. Máxima compatibilidad y rendimiento garantizado.',
         disponible: true,
