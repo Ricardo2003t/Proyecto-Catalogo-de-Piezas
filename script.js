@@ -21,6 +21,50 @@ const DEVICE_INFO = {
 let ultimaBusqueda = ''; // Guarda el término de búsqueda actual para priorizar fotos
 
 // ========================================
+// MANEJO DE NAVEGACIÓN CON PRECARGA
+// ========================================
+function configurarNavegacionPrecarga() {
+    // Obtener todos los enlaces de navegación
+    const navegacionLinks = document.querySelectorAll('nav a, #nav-menu-mobile nav a');
+    
+    navegacionLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // Si es un enlace de ancla interno (no WhatsApp ni tel)
+            if (href && href.startsWith('#') && href !== '#') {
+                // Cerrar menú móvil si está abierto
+                const navMenuMobile = document.getElementById('nav-menu-mobile');
+                const menuOverlay = document.getElementById('menu-overlay');
+                if (navMenuMobile && navMenuMobile.classList.contains('open')) {
+                    navMenuMobile.classList.remove('open');
+                    if (menuOverlay) menuOverlay.classList.remove('open');
+                }
+                
+                // Precarga agresiva: cargar todos los productos
+                if (productosCargados < productosAMostrar.length) {
+                    isLoadingMore = true;
+                    productosCargados = productosAMostrar.length; // Cargar TODO
+                    cargarProductos();
+                    isLoadingMore = false;
+                    
+                    // Hacer scroll después de un pequeño delay para permitir renderizado
+                    setTimeout(() => {
+                        const targetSection = document.querySelector(href);
+                        if (targetSection) {
+                            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }, 300);
+                }
+            }
+        });
+    });
+}
+
+// Llamar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', configurarNavegacionPrecarga);
+
+// ========================================
 // MANEJO DE MAPS PARA iOS Y ANDROID
 // ========================================
 function abrirMapa(event) {
@@ -764,7 +808,7 @@ let productosAMostrar = productos;
 const WHATSAPP_NUMBER = '+5352531473';
 
 // Variables para carga progresiva (infinite scroll)
-let productosCargados = DEVICE_INFO.isMobile ? 4 : 8; // 4 en móvil, 8 en desktop
+let productosCargados = DEVICE_INFO.isMobile ? 8 : 16; // Cargar más al inicio: 8 en móvil, 16 en desktop
 const PRODUCTOS_POR_CARGA = 4; // Siempre 4 por carga
 let observerInfiniteScroll = null;
 
