@@ -88,7 +88,7 @@ const productos = [
         modelo: ['xud9'],
         precio: 450.00,
         imagenes: [
-            'Piezas/Peugeot/Camisas + Pistones.png'
+            'Piezas/Peugeot/Camisas Pistones.png'
         ],
         descripcion: 'Kit completo de camisas y pistones para motores Peugeot. Conjunto de alta precisión que garantiza un sellado perfecto y máximo rendimiento. Fabricado con materiales de primera calidad resistentes al desgarre.',
         disponible: true,
