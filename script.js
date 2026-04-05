@@ -551,6 +551,192 @@ const productos = [
         imagenes: ['Piezas/Peugeot/Junta de Block Amianto DVV8 XUD9.png'],
         descripcion: 'Junta de block de amianto para motores DW8 y XUD9.',
         disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Amortiguadores Delanteros',
+        modelo: ['301', '405', '205'],
+        precio: 160.00,
+        imagenes: ['Piezas/Peugeot/Amortiguadores Delanteros 301 405 205GTI.png'],
+        descripcion: 'Amortiguadores delanteros para 301, 405 y 205 GTI. Par completo.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Cable Clutch',
+        modelo: ['306'],
+        precio: 30.00,
+        imagenes: ['Piezas/Peugeot/Cable Clutch 306.png'],
+        descripcion: 'Cable de embrague para motor 306.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Camisas TUD5',
+        modelo: ['tud5'],
+        precio: 180.00,
+        imagenes: ['Piezas/Peugeot/Camisas TUD5 XUD9 DW8.png'],
+        descripcion: 'Camisas de cilindro para motor TUD5. Precisión superior y resistencia a altas temperaturas.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Camisas XUD9 y DW8',
+        modelo: ['xud9', 'dw8'],
+        precio: 160.00,
+        imagenes: ['Piezas/Peugeot/Camisas TUD5 XUD9 DW8.png'],
+        descripcion: 'Camisas de cilindro para motores XUD9 y DW8. Material de primera calidad con excelente durabilidad.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Correa 6PK',
+        modelo: ['otras'],
+        precio: 25.00,
+        imagenes: ['Piezas/Peugeot/Correa 6PK 17.39.png'],
+        descripcion: 'Correa de distribución 6PK 17.39. Compatible con múltiples modelos.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Disco Clutch DW8 XUD9',
+        modelo: ['dw8', 'xud9'],
+        precio: 70.00,
+        imagenes: [
+            'Piezas/Peugeot/Disco Clutch DW8 XUD9 (FOTO1).png',
+            'Piezas/Peugeot/Disco Clutch DW8 XUD9 (FOTO2).png'
+        ],
+        descripcion: 'Disco de embrague para motores DW8 y XUD9. Desgarre mínimo y máxima durabilidad.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Esféricas',
+        modelo: ['301'],
+        precio: 50.00,
+        imagenes: ['Piezas/Peugeot/Esfericas 301.png'],
+        descripcion: 'Rótulas esféricas para dirección modelo 301.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Guías Válvulas DW8 XUD9',
+        modelo: ['dw8', 'xud9'],
+        precio: 50.00,
+        imagenes: ['Piezas/Peugeot/Guias Valvulas DW8 XUD9.png'],
+        descripcion: 'Guías de válvulas para motores DW8 y XUD9. Precisión y durabilidad garantizadas.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Kit Distribución',
+        modelo: ['301'],
+        precio: 95.00,
+        imagenes: ['Piezas/Peugeot/Kit Distribucion 301.png'],
+        descripcion: 'Kit de distribución completo para motor 301.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Kit Juntas',
+        modelo: ['301'],
+        precio: 120.00,
+        imagenes: ['Piezas/Peugeot/Kit Juntas 301.png'],
+        descripcion: 'Kit completo de juntas para motor 301. Aseguran hermeticidad perfecta.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Obturadores',
+        modelo: ['tud5', 'xud9', 'dw8', 'tu3'],
+        precio: 15.00,
+        imagenes: ['Piezas/Peugeot/Obturadores TUD5 XUD9 DW8 TU3.png'],
+        descripcion: 'Obturadores de válvulas para motores TUD5, XUD9, DW8 y TU3.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Parrillas',
+        modelo: ['301'],
+        precio: 140.00,
+        imagenes: ['Piezas/Peugeot/Parrillas 301.png'],
+        descripcion: 'Parrillas delanteras para modelo 301. La pareja.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Radiador',
+        modelo: ['205'],
+        precio: 100.00,
+        imagenes: ['Piezas/Peugeot/Radiador 205.png'],
+        descripcion: 'Radiador refrigerante para modelo 205.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Rodamiento Delantero Universal',
+        modelo: ['otras'],
+        precio: 50.00,
+        imagenes: ['Piezas/Peugeot/Rodamiento Delantero Universal CITROEN.png'],
+        descripcion: 'Rodamiento delantero universal compatible con Citroën y Peugeot.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Rodamiento Delantero',
+        modelo: ['405'],
+        precio: 30.00,
+        imagenes: ['Piezas/Peugeot/Rodamiento Delantero Universal CITROEN.png'],
+        descripcion: 'Rodamiento delantero para modelo 405. $30 individual o $60 la pareja.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Tensor Dinámico XUD9',
+        modelo: ['xud9'],
+        precio: 40.00,
+        imagenes: [
+            'Piezas/Peugeot/Tensor Dinamico XUD9 (FOTO1).png',
+            'Piezas/Peugeot/Tensor Dinamico XUD9 (FOTO2).png'
+        ],
+        descripcion: 'Tensor dinámico para motor XUD9. Mantiene tensión óptima de correa.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Válvula Electrónica de Bomba',
+        modelo: ['otras'],
+        precio: 35.00,
+        imagenes: ['Piezas/Peugeot/Valvula Electronica de Bomba Lucas y Bosch.png'],
+        descripcion: 'Válvula electrónica de bomba Lucas y Bosch. Compatible con motores diesel.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Válvulas XUD9 y DW8',
+        modelo: ['xud9', 'dw8'],
+        precio: 50.00,
+        imagenes: ['Piezas/Peugeot/Valvulas XUD9 DW8 TUD5.png'],
+        descripcion: 'Kit de válvulas para motores XUD9 y DW8. Resistentes a altas temperaturas.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Válvulas TUD5',
+        modelo: ['tud5'],
+        precio: 85.00,
+        imagenes: ['Piezas/Peugeot/Valvulas XUD9 DW8 TUD5.png'],
+        descripcion: 'Kit de válvulas para motor TUD5. Fabricadas con precisión de fábrica.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Vieleta Suspensión',
+        modelo: ['406'],
+        precio: 30.00,
+        imagenes: ['Piezas/Peugeot/Vieleta Suspension 406.png'],
+        descripcion: 'Vieleta/varilla de suspensión para modelo 406.',
+        disponible: true
     }
 ];
 
