@@ -809,7 +809,7 @@ let productosAMostrar = productos;
 const WHATSAPP_NUMBER = '+5352531473';
 
 // Variables para carga progresiva (infinite scroll)
-let productosCargados = DEVICE_INFO.isMobile ? 8 : 16; // Cargar más al inicio: 8 en móvil, 16 en desktop
+let productosCargados = DEVICE_INFO.isMobile ? 4 : 4; // Cargar de 4 en 4: 4 en móvil, 4 en desktop (optimizado para conexión lenta)
 const PRODUCTOS_POR_CARGA = 4; // Siempre 4 por carga
 let observerInfiniteScroll = null;
 
@@ -1630,7 +1630,7 @@ function filtrarProductos() {
     
     // Resetear contador de paginación al filtrar
     isLoadingMore = false;
-    productosCargados = DEVICE_INFO.isMobile ? 4 : 8;
+    productosCargados = DEVICE_INFO.isMobile ? 4 : 4; // Mantener 4 en 4 para conexión lenta
     
     // Limpiar scroll debounce timer
     clearTimeout(scrollDebounceTimer);
