@@ -16,6 +16,11 @@ const DEVICE_INFO = {
 };
 
 // ========================================
+// VARIABLE GLOBAL PARA BÚSQUEDA ACTUAL
+// ========================================
+let ultimaBusqueda = ''; // Guarda el término de búsqueda actual para priorizar fotos
+
+// ========================================
 // MANEJO DE MAPS PARA iOS Y ANDROID
 // ========================================
 function abrirMapa(event) {
@@ -1511,6 +1516,9 @@ function getEditDistance(s1, s2) {
 function filtrarProductos() {
     const terminoBusqueda = (document.getElementById('buscador')?.value || '').toLowerCase().trim();
     
+    // Guardar el término de búsqueda actual para priorizar fotos relevantes
+    ultimaBusqueda = terminoBusqueda;
+    
     if (terminoBusqueda === '') {
         productosAMostrar = productos.filter(producto => 
             (marcaActiva === 'todos' || producto.marca === marcaActiva) &&
@@ -1591,11 +1599,63 @@ function filtrarProductos() {
     cargarProductos();
 }
 
+// ========================================
+// FUNCIÓN PARA PRIORIZAR FOTOS RELEVANTES
+// ========================================
+function ordenarImagenesPorBusqueda(imagenes, producto) {
+    // Si no hay búsqueda activa, devolver como está
+    if (!ultimaBusqueda || ultimaBusqueda.trim() === '') {
+        return imagenes;
+    }
+    
+    const termino = ultimaBusqueda.toLowerCase();
+    
+    // Crear array con índices y puntuaciones
+    const imagenesConPuntuacion = imagenes.map((imagen, index) => {
+        // Convertir ruta a minúsculas para comparación
+        const rutaImage = imagen.toLowerCase();
+        const nombreProducto = producto.nombre.toLowerCase();
+        
+        let puntuacion = 0;
+        
+        // Buscar palabras del término en la ruta de la imagen
+        const palabrasBusqueda = termino.split(' ').filter(p => p.length > 0);
+        
+        palabrasBusqueda.forEach(palabra => {
+            // Match exacto en la ruta: +50 puntos
+            if (rutaImage.includes(palabra)) {
+                puntuacion += 50;
+            }
+            // Match en el nombre del producto: +30 puntos
+            if (nombreProducto.includes(palabra)) {
+                puntuacion += 30;
+            }
+        });
+        
+        // Bonus si el término completo está en la ruta: +100 puntos
+        if (rutaImage.includes(termino)) {
+            puntuacion += 100;
+        }
+        
+        return { imagen, index, puntuacion };
+    });
+    
+    // Ordenar por puntuación (descendente)
+    imagenesConPuntuacion.sort((a, b) => b.puntuacion - a.puntuacion);
+    
+    // Extraer imágenes reordenadas
+    return imagenesConPuntuacion.map(item => item.imagen);
+}
+
 // Abrir modal con detalles
 function abrirModal(producto) {
     const modelosTexto = Array.isArray(producto.modelo) ? producto.modelo.map(m => m.toUpperCase()).join('      ') : producto.modelo.toUpperCase();
     const disponible = producto.disponible !== false;
-    const imagenes = Array.isArray(producto.imagenes) ? producto.imagenes : [producto.imagen];
+    let imagenes = Array.isArray(producto.imagenes) ? producto.imagenes : [producto.imagen];
+    
+    // Priorizar fotos que coincidan con el término de búsqueda
+    imagenes = ordenarImagenesPorBusqueda(imagenes, producto);
+    
     const tieneMultiplesImagenes = imagenes.length > 1;
     
     // Ocultar filtros
