@@ -350,6 +350,7 @@ const productos = [
         nombre: 'Aceite Motor 15W-40 5L',
         modelo: ['otras'],
         precio: 20.00,
+        precioOriginal: 25.00,
         imagenes: ['Piezas/Peugeot/Aceite Motor 15W-40 (5 litros).PNG'],
         descripcion: 'Aceite motor 15W-40, 5 litros.',
         disponible: true,
@@ -369,6 +370,7 @@ const productos = [
         nombre: 'Aceite Motor 20W-50 5L',
         modelo: ['otras'],
         precio: 20.00,
+        precioOriginal: 25.00,
         imagenes: ['Piezas/Peugeot/Aceite Motor 20W-50 (5 litros).PNG'],
         descripcion: 'Aceite motor 20W-50, 5 litros.',
         disponible: true,
@@ -1314,7 +1316,14 @@ function cargarProductos() {
                 <span class="producto-modelo">${modelosTexto}</span>
                 <div class="py-3 border-t border-slate-200"></div>
                 <div class="flex justify-between items-center">
-                    <div class="producto-precio">$${producto.precio.toFixed(2)}</div>
+                    <div class="producto-precio">
+                        ${producto.oferta && producto.precioOriginal ? `
+                            <div style="margin-bottom: 4px;">
+                                <span style="font-size: 0.75rem; color: #9ca3af; text-decoration: line-through; display: inline-block;">$${producto.precioOriginal.toFixed(2)}</span>
+                            </div>
+                        ` : ''}
+                        <div style="font-size: 1.125rem; font-weight: 700; color: #0f172a;">$${producto.precio.toFixed(2)}</div>
+                    </div>
                     <div class="producto-disponibilidad-badge ${disponible ? 'disponible' : 'no-disponible'}">
                         ${disponible ? 'Disponible' : 'No disponible'}
                     </div>
@@ -1712,7 +1721,20 @@ function abrirModal(producto) {
     // Actualizar información del producto
     document.getElementById('modal-nombre').textContent = producto.nombre;
     document.getElementById('modal-modelo').textContent = modelosTexto;
-    document.getElementById('modal-precio').textContent = `$${producto.precio.toFixed(2)}`;
+    
+    // Mostrar precio con descuento si es oferta
+    const modalPrecioDiv = document.getElementById('modal-precio');
+    if (producto.oferta && producto.precioOriginal) {
+        modalPrecioDiv.innerHTML = `
+            <div style="margin-bottom: 8px;">
+                <span style="font-size: 0.875rem; color: #9ca3af; text-decoration: line-through;">$${producto.precioOriginal.toFixed(2)}</span>
+            </div>
+            <div style="font-size: 1.5rem; font-weight: 700; color: #0f172a;">$${producto.precio.toFixed(2)}</div>
+        `;
+    } else {
+        modalPrecioDiv.textContent = `$${producto.precio.toFixed(2)}`;
+    }
+    
     document.getElementById('modal-descripcion').textContent = producto.descripcion;
     
     const disponibilidadBadge = document.getElementById('modal-disponibilidad-badge');
