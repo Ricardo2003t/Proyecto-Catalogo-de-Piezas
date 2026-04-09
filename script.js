@@ -349,10 +349,11 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Aceite Motor 15W-40 5L',
         modelo: ['otras'],
-        precio: 25.00,
+        precio: 20.00,
         imagenes: ['Piezas/Peugeot/Aceite Motor 15W-40 (5 litros).PNG'],
         descripcion: 'Aceite motor 15W-40, 5 litros.',
-        disponible: true
+        disponible: true,
+        oferta: true
     },
     {
         marca: 'peugeot',
@@ -367,10 +368,11 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Aceite Motor 20W-50 5L',
         modelo: ['otras'],
-        precio: 25.00,
+        precio: 20.00,
         imagenes: ['Piezas/Peugeot/Aceite Motor 20W-50 (5 litros).PNG'],
         descripcion: 'Aceite motor 20W-50, 5 litros.',
-        disponible: true
+        disponible: true,
+        oferta: true
     },
     {
         marca: 'peugeot',
