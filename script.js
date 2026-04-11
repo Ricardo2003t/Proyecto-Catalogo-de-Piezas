@@ -134,6 +134,17 @@ const productos = [
         disponible: true
     },
     {
+        marca: 'hyundai',
+        nombre: 'Junta de Block Hyundai H100',
+        modelo: ['h100'],
+        precio: 20.00,
+        imagenes: [
+            'Piezas/Hyundai/Junta de Block Hyundai H100 20 USD .jpeg'
+        ],
+        descripcion: 'Junta de block de alta calidad para Hyundai H100. Sella perfectamente el block del motor. Garantiza máxima hermeticidad y durabilidad. Compatible con motores diesel y gasolina del H100.',
+        disponible: true
+    },
+    {
         marca: 'peugeot',
         nombre: 'Filtro de Aceite M20',
         modelo: ['universal'],
