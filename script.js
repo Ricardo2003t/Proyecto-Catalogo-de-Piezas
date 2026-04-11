@@ -755,16 +755,16 @@ const productos = [
         modelo: ['universal'],
         precio: 50.00,
         imagenes: ['Piezas/Peugeot/Rodamiento Delantero Universal CITROEN.png'],
-        descripcion: 'Rodamiento delantero universal compatible con Citroën y Peugeot.',
+        descripcion: 'Rodamiento delantero universal compatible con Citroën y Peugeot. La pareja: 50 USD',
         disponible: true
     },
     {
         marca: 'peugeot',
         nombre: 'Rodamiento Delantero',
         modelo: ['405'],
-        precio: 30.00,
+        precio: 60.00,
         imagenes: ['Piezas/Peugeot/Rodamiento Delantero Universal CITROEN.png'],
-        descripcion: 'Rodamiento delantero para modelo 405. $30 individual o $60 la pareja.',
+        descripcion: 'Rodamiento delantero para modelo 405. La pareja: 60 USD',
         disponible: true
     },
     {
