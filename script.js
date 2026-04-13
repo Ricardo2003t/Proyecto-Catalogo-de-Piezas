@@ -273,7 +273,7 @@ const productos = [
         marca: 'peugeot',
         nombre: 'Motor de Arranque',
         modelo: ['xud7', 'xud9', 'dw8'],
-        precio: 140.00,
+        precio: 150.00,
         imagenes: ['Piezas/Peugeot/Motor Aranque XUD9 DVV8 XUD7.png'],
         descripcion: 'Motor de arranque para motores XUD7, XUD9 y DW8.',
         disponible: true
@@ -597,6 +597,15 @@ const productos = [
         precio: 25.00,
         imagenes: ['Piezas/Peugeot/Junta Block Amianto TUD5.png'],
         descripcion: 'Junta de block de amianto para motor TUD5.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Junta Block Amianto',
+        modelo: ['tu3'],
+        precio: 25.00,
+        imagenes: ['Piezas/Peugeot/Junta de Block Amianto TU3 25 USD .jpeg'],
+        descripcion: 'Junta de block de amianto para motor TU3.',
         disponible: true
     },
     {
