@@ -589,18 +589,6 @@ const productos = [
     },
     {
         marca: 'peugeot',
-        nombre: 'Correa Distribución 136 140 141 Dientes',
-        modelo: ['otras'],
-        precio: 35.00,
-          imagenes: [
-            'Piezas/Peugeot/Correa Distribucion 136 , 140 , 141  (foto1).webp',
-            'Piezas/Peugeot/Correa Distribucion 136 , 140 , 141  (foto2).webp'
-        ],
-        descripcion: 'Correa de distribución con opciones de 136, 140 o 141 dientes.',
-        disponible: true
-    },
-    {
-        marca: 'peugeot',
         nombre: 'Cubo de Rueda',
         modelo: ['205', '206', '207', '308', '306', '307', '309', '405', '406', 'partner'],
         precio: 80.00,
@@ -749,6 +737,18 @@ const productos = [
         precio: 25.00,
         imagenes: ['Piezas/Peugeot/Correa 6PK 17.39.webp'],
         descripcion: 'Correa de distribución 6PK 17.39. Compatible con múltiples modelos.',
+        disponible: true
+    },
+    {
+        marca: 'peugeot',
+        nombre: 'Correa Distribución 136 140 141',
+        modelo: ['otras'],
+        precio: 35.00,
+        imagenes: [
+            'Piezas/Peugeot/Correa Distribucion136,140,141(foto1).webp',
+            'Piezas/Peugeot/Correa Distribucion136,140,141(foto2).webp'
+        ],
+        descripcion: 'Correa de distribución con opciones de 136, 140 o 141 dientes.',
         disponible: true
     },
     {
