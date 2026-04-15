@@ -272,6 +272,50 @@
     </a>
 
     <script src="script.js"></script>
+    
+    <!-- Optimización de Iconos a WebP -->
+    <script>
+        /**
+         * Script para optimizar iconos estáticos a WebP
+         * Ejecuta después que el DOM esté listo
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            // Solo ejecutar si el navegador soporta WebP y fue detectado
+            if (!DEVICE_INFO || !DEVICE_INFO.supportsWebP) return;
+            
+            // Mapeo de iconos PNG a WebP
+            const iconosParaOptimizar = {
+                'Icons8/icons8-whatsapp-50.png': 'Icons8/icons8-whatsapp-50.webp',
+                'Icons8/icons8-phone-50.png': 'Icons8/icons8-phone-50.webp',
+                'Icons8/icons8-address-50.png': 'Icons8/icons8-address-50.webp',
+                'Icons8/icons8-location-50.png': 'Icons8/icons8-location-50.webp',
+                'Icons8/Direccion google maps.png': 'Icons8/Direccion google maps.webp'
+            };
+            
+            // Buscar todas las imágenes en la página
+            document.querySelectorAll('img[src]').forEach(img => {
+                const srcOriginal = img.getAttribute('src');
+                if (iconosParaOptimizar[srcOriginal]) {
+                    const srcWebP = iconosParaOptimizar[srcOriginal];
+                    
+                    // Crear nueva imagen de prueba para verificar que existe
+                    const testImg = new Image();
+                    testImg.onload = function() {
+                        // Si la imagen WebP se carga exitosamente, reemplazar
+                        img.src = srcWebP;
+                        img.dataset.optimizado = 'webp';
+                    };
+                    testImg.onerror = function() {
+                        // Si la imagen WebP no existe, mantener PNG
+                        img.dataset.optimizado = 'png';
+                    };
+                    testImg.src = srcWebP;
+                }
+            });
+            
+            console.log('[Optimización] Iconos optimizados a WebP donde disponibles');
+        });
+    </script>
 </body>
 </html>
 

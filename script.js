@@ -12,8 +12,94 @@ const DEVICE_INFO = {
         if (!/iPad|iPhone|iPod/.test(navigator.userAgent)) return null;
         const match = navigator.userAgent.match(/OS (\d+)_/);
         return match ? parseInt(match[1]) : null;
-    })()
+    })(),
+    // Detección de soporte WebP
+    supportsWebP: false
 };
+
+// Detectar soporte WebP (se ejecuta al cargar)
+(function() {
+    const webp = new Image();
+    webp.onload = webp.onerror = function() {
+        DEVICE_INFO.supportsWebP = (webp.height === 2);
+        console.log(`[Optimización] WebP soportado: ${DEVICE_INFO.supportsWebP}`);
+    };
+    webp.src = 'data:image/webp;base64,UklGRjoIAABXEBP7AAAAAAAAAAAAAAAAAAAAAAAAACIAAABLAP7/'
+})();
+
+// ========================================
+// OPTIMIZACIÓN DE IMÁGENES - WebP CON FALLBACK
+// ========================================
+/**
+ * Convierte una ruta de imagen PNG/JPG a WebP si está soportado
+ * Mantiene la ruta original como fallback
+ * @param {string} ruta - Ruta de imagen original (PNG o JPG)
+ * @returns {object} { webp: ruta_webp, fallback: ruta_original, useWebP: boolean }
+ */
+function obtenerRutasImagen(ruta) {
+    if (!ruta) return { webp: '', fallback: '', useWebP: false };
+    
+    // Reemplazar extensión por .webp si el navegador lo soporta
+    if (DEVICE_INFO.supportsWebP) {
+        // Remover la extensión y agregar .webp
+        const rutaWebP = ruta.replace(/\.(png|jpg|jpeg|PNG|JPG|JPEG)$/i, '.webp');
+        return {
+            webp: rutaWebP,
+            fallback: ruta,
+            useWebP: true
+        };
+    }
+    
+    return {
+        webp: ruta,
+        fallback: ruta,
+        useWebP: false
+    };
+}
+
+/**
+ * Genera el atributo srcset para soportar WebP con fallback
+ * Útil para navegadores modernos que soportan picture element
+ * @param {string} ruta - Ruta de imagen original
+ * @returns {string} - HTML srcset attribute value
+ */
+function generarSrcSet(ruta) {
+    const imagenes = obtenerRutasImagen(ruta);
+    if (!imagenes.useWebP) return '';
+    return `${imagenes.webp}`;
+}
+
+/**
+ * Factory para generar HTML de imagen optim izado
+ * Soporta tanto <picture> como <img> tradicional
+ * @param {string} ruta - Ruta de imagen
+ * @param {string} alt - Texto alternativo
+ * @param {object} attrs - Atributos adicionales
+ * @returns {string} - HTML string
+ */
+function generarImagenOptimizada(ruta, alt = '', attrs = {}) {
+    const imagenes = obtenerRutasImagen(ruta);
+    
+    if (!imagenes.useWebP) {
+        // Si no se soporta WebP, devolver img normal
+        const attrStr = Object.entries(attrs)
+            .map(([key, val]) => `${key}="${val}"`)
+            .join(' ');
+        return `<img src="${imagenes.fallback}" alt="${alt}" ${attrStr}>`;
+    }
+    
+    // Generar picture element para mejor control de fallback
+    const attrStr = Object.entries(attrs)
+        .map(([key, val]) => `${key}="${val}"`)
+        .join(' ');
+        
+    return `
+        <picture>
+            <source srcset="${imagenes.webp}" type="image/webp">
+            <img src="${imagenes.fallback}" alt="${alt}" ${attrStr}>
+        </picture>
+    `;
+}
 
 // ========================================
 // VARIABLE GLOBAL PARA BÚSQUEDA ACTUAL
@@ -1301,17 +1387,24 @@ function cargarProductos() {
         const primerImagen = imagenes[0];
         const tieneMultiplesImagenes = imagenes.length > 1;
         
-        // Crear HTML del carrusel
+        // Crear HTML del carrusel con soporte WebP
         let carouselHTML = '';
         if (tieneMultiplesImagenes) {
             carouselHTML = `
                 <div class="carousel-container" data-carousel="${index}">
                     <div class="carousel-inner">
-                        ${imagenes.map((img, i) => `
-                            <div class="carousel-item ${i === 0 ? 'active' : ''}" style="background-image: url('${img}'); background-size: cover; background-position: center;">
-                                <img ${i === 0 ? `src="${img}"` : `data-src="${img}"`} alt="${producto.nombre}" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" width="300" height="300">
+                        ${imagenes.map((img, i) => {
+                            const {webp, fallback} = obtenerRutasImagen(img);
+                            // Usar WebP para background si está soportado
+                            const bgUrl = DEVICE_INFO.supportsWebP ? webp : fallback;
+                            return `
+                            <div class="carousel-item ${i === 0 ? 'active' : ''}" style="background-image: url('${bgUrl}'); background-size: cover; background-position: center;">
+                                <picture>
+                                    <source srcset="${webp}" type="image/webp">
+                                    <img ${i === 0 ? `src="${fallback}"` : `data-src="${fallback}"`} alt="${producto.nombre}" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" width="300" height="300">
+                                </picture>
                             </div>
-                        `).join('')}
+                        `}).join('')}
                     </div>
                     <div class="carousel-dots">
                         ${imagenes.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" data-slide="${i}"></span>`).join('')}
@@ -1319,9 +1412,14 @@ function cargarProductos() {
                 </div>
             `;
         } else {
+            const {webp, fallback} = obtenerRutasImagen(primerImagen);
+            const bgUrl = DEVICE_INFO.supportsWebP ? webp : fallback;
             carouselHTML = `
-                <div class="producto-imagen" style="background-image: url('${primerImagen}'); background-size: cover; background-position: center;">
-                    <img src="${primerImagen}" alt="${producto.nombre}" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" width="300" height="300">
+                <div class="producto-imagen" style="background-image: url('${bgUrl}'); background-size: cover; background-position: center;">
+                    <picture>
+                        <source srcset="${webp}" type="image/webp">
+                        <img src="${fallback}" alt="${producto.nombre}" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" width="300" height="300">
+                    </picture>
                 </div>
             `;
         }
@@ -1766,15 +1864,21 @@ function abrirModal(producto) {
     imageContainer.innerHTML = '';
     
     if (tieneMultiplesImagenes) {
-        // Crear carrusel
+        // Crear carrusel con soporte WebP
         const carouselHTML = `
             <div class="carousel-container modal-carousel">
                 <div class="carousel-inner">
-                    ${imagenes.map((img, i) => `
-                        <div class="carousel-item ${i === 0 ? 'active' : ''}" style="background-image: url('${img}'); background-size: cover; background-position: center;">
-                            <img src="${img}" alt="${producto.nombre}" style="width: 100%; height: 100%; object-fit: cover;">
+                    ${imagenes.map((img, i) => {
+                        const {webp, fallback} = obtenerRutasImagen(img);
+                        const bgUrl = DEVICE_INFO.supportsWebP ? webp : fallback;
+                        return `
+                        <div class="carousel-item ${i === 0 ? 'active' : ''}" style="background-image: url('${bgUrl}'); background-size: cover; background-position: center;">
+                            <picture>
+                                <source srcset="${webp}" type="image/webp">
+                                <img src="${fallback}" alt="${producto.nombre}" style="width: 100%; height: 100%; object-fit: cover;">
+                            </picture>
                         </div>
-                    `).join('')}
+                    `}).join('')}
                 </div>
                 <div class="carousel-dots">
                     ${imagenes.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" data-slide="${i}"></span>`).join('')}
@@ -1787,12 +1891,15 @@ function abrirModal(producto) {
         const carousel = imageContainer.querySelector('.carousel-container');
         configurarCarruselModal(carousel, imagenes);
     } else {
-        // Imagen simple
-        const img = document.createElement('img');
-        img.id = 'modal-img';
-        img.src = imagenes[0] || '';
-        img.alt = producto.nombre;
-        imageContainer.appendChild(img);
+        // Imagen simple con soporte WebP
+        const {webp, fallback} = obtenerRutasImagen(imagenes[0]);
+        const pictureHTML = `
+            <picture>
+                <source srcset="${webp}" type="image/webp">
+                <img id="modal-img" src="${fallback}" alt="${producto.nombre}">
+            </picture>
+        `;
+        imageContainer.innerHTML = pictureHTML;
     }
     
     const whatsappBtn = document.getElementById('btn-whatsapp');
