@@ -589,10 +589,10 @@ const productos = [
     },
     {
         marca: 'peugeot',
-        nombre: 'Correa Distribución 136 140 141',
+        nombre: 'Correa Distribución 136 140 141 Dientes',
         modelo: ['otras'],
         precio: 35.00,
-        imagenes: [
+          imagenes: [
             'Piezas/Peugeot/Correa Distribucion 136 , 140 , 141  (foto1).webp',
             'Piezas/Peugeot/Correa Distribucion 136 , 140 , 141  (foto2).webp'
         ],
