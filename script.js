@@ -383,7 +383,6 @@ const productos = [
         modelo: ['xud9', 'dw8'],
         precio: 10.00,
         imagenes: [
-            'Piezas/Peugeot/Retenes de Baston XUD9 DVV8 (foto1).webp',
             'Piezas/Peugeot/Retenes de Baston XUD9 DVV8 (foto2).webp'
         ],
         descripcion: 'Retenes de bastón para motores XUD9 y DW8.',
@@ -851,8 +850,7 @@ const productos = [
         modelo: ['xud9'],
         precio: 40.00,
         imagenes: [
-            'Piezas/Peugeot/Tensor Dinamico XUD9 (FOTO1).webp',
-            'Piezas/Peugeot/Tensor Dinamico XUD9 (FOTO2).webp'
+            'Piezas/Peugeot/Tensor Dinamico XUD9 (FOTO1).webp'
         ],
         descripcion: 'Tensor dinámico para motor XUD9. Mantiene tensión óptima de correa.',
         disponible: true
