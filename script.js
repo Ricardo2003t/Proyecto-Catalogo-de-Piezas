@@ -31,29 +31,21 @@ const DEVICE_INFO = {
 // OPTIMIZACIÓN DE IMÁGENES - WebP CON FALLBACK
 // ========================================
 /**
- * Convierte una ruta de imagen PNG/JPG a WebP si está soportado
- * Mantiene la ruta original como fallback
- * @param {string} ruta - Ruta de imagen original (PNG o JPG)
- * @returns {object} { webp: ruta_webp, fallback: ruta_original, useWebP: boolean }
+ * Convierte una ruta de imagen PNG/JPG a WebP
+ * Ahora todas las imágenes están en WebP, sin fallback PNG/JPG
+ * @param {string} ruta - Ruta de imagen original (PNG, JPG o WebP)
+ * @returns {object} { webp: ruta_webp, fallback: ruta_webp }
  */
 function obtenerRutasImagen(ruta) {
-    if (!ruta) return { webp: '', fallback: '', useWebP: false };
+    if (!ruta) return { webp: '', fallback: '' };
     
-    // Reemplazar extensión por .webp si el navegador lo soporta
-    if (DEVICE_INFO.supportsWebP) {
-        // Remover la extensión y agregar .webp
-        const rutaWebP = ruta.replace(/\.(png|jpg|jpeg|PNG|JPG|JPEG)$/i, '.webp');
-        return {
-            webp: rutaWebP,
-            fallback: ruta,
-            useWebP: true
-        };
-    }
+    // Convertir a WebP (ya sea que sea PNG, JPG o JPE G)
+    // Si ya es WebP, dejarla igual
+    const rutaWebP = ruta.replace(/\.(png|jpg|jpeg|PNG|JPG|JPEG)$/i, '.webp');
     
     return {
-        webp: ruta,
-        fallback: ruta,
-        useWebP: false
+        webp: rutaWebP,
+        fallback: rutaWebP  // Mismo que webp, ya que todos son WebP
     };
 }
 
@@ -70,33 +62,24 @@ function generarSrcSet(ruta) {
 }
 
 /**
- * Factory para generar HTML de imagen optim izado
- * Soporta tanto <picture> como <img> tradicional
- * @param {string} ruta - Ruta de imagen
+ * Factory para generar HTML de imagen optimizado
+ * Todos los archivos están en WebP ahora
+ * @param {string} ruta - Ruta de imagen (PNG, JPG o WebP)
  * @param {string} alt - Texto alternativo
  * @param {object} attrs - Atributos adicionales
  * @returns {string} - HTML string
  */
 function generarImagenOptimizada(ruta, alt = '', attrs = {}) {
     const imagenes = obtenerRutasImagen(ruta);
-    
-    if (!imagenes.useWebP) {
-        // Si no se soporta WebP, devolver img normal
-        const attrStr = Object.entries(attrs)
-            .map(([key, val]) => `${key}="${val}"`)
-            .join(' ');
-        return `<img src="${imagenes.fallback}" alt="${alt}" ${attrStr}>`;
-    }
-    
-    // Generar picture element para mejor control de fallback
     const attrStr = Object.entries(attrs)
         .map(([key, val]) => `${key}="${val}"`)
         .join(' ');
-        
+    
+    // Usar picture element con WebP
     return `
         <picture>
             <source srcset="${imagenes.webp}" type="image/webp">
-            <img src="${imagenes.fallback}" alt="${alt}" ${attrStr}>
+            <img src="${imagenes.webp}" alt="${alt}" ${attrStr}>
         </picture>
     `;
 }
@@ -1394,14 +1377,13 @@ function cargarProductos() {
                 <div class="carousel-container" data-carousel="${index}">
                     <div class="carousel-inner">
                         ${imagenes.map((img, i) => {
-                            const {webp, fallback} = obtenerRutasImagen(img);
-                            // Usar WebP para background si está soportado
-                            const bgUrl = DEVICE_INFO.supportsWebP ? webp : fallback;
+                            const {webp} = obtenerRutasImagen(img);
+                            // Todas las imágenes están en WebP
                             return `
-                            <div class="carousel-item ${i === 0 ? 'active' : ''}" style="background-image: url('${bgUrl}'); background-size: cover; background-position: center;">
+                            <div class="carousel-item ${i === 0 ? 'active' : ''}" style="background-image: url('${webp}'); background-size: cover; background-position: center;">
                                 <picture>
                                     <source srcset="${webp}" type="image/webp">
-                                    <img ${i === 0 ? `src="${fallback}"` : `data-src="${fallback}"`} alt="${producto.nombre}" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" width="300" height="300">
+                                    <img ${i === 0 ? `src="${webp}"` : `data-src="${webp}"`} alt="${producto.nombre}" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" width="300" height="300">
                                 </picture>
                             </div>
                         `}).join('')}
@@ -1412,13 +1394,12 @@ function cargarProductos() {
                 </div>
             `;
         } else {
-            const {webp, fallback} = obtenerRutasImagen(primerImagen);
-            const bgUrl = DEVICE_INFO.supportsWebP ? webp : fallback;
+            const {webp} = obtenerRutasImagen(primerImagen);
             carouselHTML = `
-                <div class="producto-imagen" style="background-image: url('${bgUrl}'); background-size: cover; background-position: center;">
+                <div class="producto-imagen" style="background-image: url('${webp}'); background-size: cover; background-position: center;">
                     <picture>
                         <source srcset="${webp}" type="image/webp">
-                        <img src="${fallback}" alt="${producto.nombre}" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" width="300" height="300">
+                        <img src="${webp}" alt="${producto.nombre}" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" width="300" height="300">
                     </picture>
                 </div>
             `;
@@ -1869,13 +1850,12 @@ function abrirModal(producto) {
             <div class="carousel-container modal-carousel">
                 <div class="carousel-inner">
                     ${imagenes.map((img, i) => {
-                        const {webp, fallback} = obtenerRutasImagen(img);
-                        const bgUrl = DEVICE_INFO.supportsWebP ? webp : fallback;
+                        const {webp} = obtenerRutasImagen(img);
                         return `
-                        <div class="carousel-item ${i === 0 ? 'active' : ''}" style="background-image: url('${bgUrl}'); background-size: cover; background-position: center;">
+                        <div class="carousel-item ${i === 0 ? 'active' : ''}" style="background-image: url('${webp}'); background-size: cover; background-position: center;">
                             <picture>
                                 <source srcset="${webp}" type="image/webp">
-                                <img src="${fallback}" alt="${producto.nombre}" style="width: 100%; height: 100%; object-fit: cover;">
+                                <img src="${webp}" alt="${producto.nombre}" style="width: 100%; height: 100%; object-fit: cover;">
                             </picture>
                         </div>
                     `}).join('')}
