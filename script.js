@@ -580,11 +580,11 @@ const productos = [
     },
     {
         marca: 'peugeot',
-        nombre: 'Camisas XUD9 y DVV8',
-        modelo: ['xud9', 'dvv8'],
+        nombre: 'Camisas XUD9 y DW8',
+        modelo: ['xud9', 'dw8'],
         precio: 160.00,
-        imagenes: ['Piezas/Peugeot/Camisas TUD5 XUD9 DVV8.webp'],
-        descripcion: 'Camisas de cilindro para motores XUD9 y DVV8. Material de primera calidad con excelente durabilidad.',
+        imagenes: ['Piezas/Peugeot/Camisas TUD5 XUD9 DW8.webp'],
+        descripcion: 'Camisas de cilindro para motores XUD9 y DW8. Material de primera calidad con excelente durabilidad.',
         disponible: true
     },
     {
