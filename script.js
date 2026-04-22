@@ -952,6 +952,136 @@ function actualizarModelosVisibles(marca) {
     });
 }
 
+// ========================================
+// CARRUSEL DE OFERTAS
+// ========================================
+let carouselPos = 0;
+let itemsPerView = 1;
+const CAROUSEL_AUTO_SCROLL_TIME = 6000; // 6 segundos
+
+function obtenerProductosEnOferta() {
+    return productos.filter(p => p.oferta === true);
+}
+
+function calcularItemsVisibles() {
+    const width = window.innerWidth;
+    // Sincronizado con el grid de productos pero mostrando menos para permitir scroll
+    if (width >= 1280) return 4;      // Desktop grande (5 cols grid)
+    if (width >= 1024) return 3;      // Desktop (4 cols grid)
+    if (width >= 768) return 2;       // Tablet (3 cols grid)
+    if (width >= 480) return 2;       // Móvil mediano
+    return 1;                         // Móvil pequeño
+}
+
+function inicializarCarrouselOfertas() {
+    const productosOferta = obtenerProductosEnOferta();
+    const container = document.getElementById('carrusel-ofertas-container');
+    
+    if (productosOferta.length === 0 || !container) return;
+    
+    container.style.display = 'block';
+    itemsPerView = calcularItemsVisibles();
+    renderCarrouselItems(productosOferta);
+    configurarCarrouselEventos(productosOferta);
+    actualizarPosicionCarrousel(productosOferta.length);
+    
+    // Auto-scroll
+    setInterval(() => {
+        if (carouselPos < productosOferta.length - itemsPerView) {
+            carouselPos++;
+        } else {
+            carouselPos = 0;
+        }
+        actualizarPosicionCarrousel(productosOferta.length);
+    }, CAROUSEL_AUTO_SCROLL_TIME);
+    
+    // Responsive
+    window.addEventListener('resize', () => {
+        itemsPerView = calcularItemsVisibles();
+        actualizarPosicionCarrousel(productosOferta.length);
+    });
+}
+
+function renderCarrouselItems(productosOferta) {
+    const track = document.getElementById('carrusel-track');
+    if (!track) return;
+    
+    track.innerHTML = '';
+    
+    productosOferta.forEach((producto) => {
+        const item = document.createElement('div');
+        item.className = 'carrusel-item';
+        
+        const imagenUrl = obtenerRutasImagen(producto.imagenes[0]).webp;
+        const descuento = producto.precioOriginal 
+            ? Math.round(((producto.precioOriginal - producto.precio) / producto.precioOriginal) * 100)
+            : 0;
+        
+        item.innerHTML = `
+            <div class="carrusel-item-imagen">
+                <img src="${imagenUrl}" alt="${producto.nombre}">
+            </div>
+            <div class="carrusel-item-contenido">
+                <h4 class="carrusel-item-nombre">${producto.nombre}</h4>
+                <p class="carrusel-item-modelo">${producto.modelo.join(', ')}</p>
+                <div class="carrusel-item-precio">
+                    <span class="carrusel-item-precio-actual" style="color: #000000;">$${producto.precio.toFixed(2)}</span>
+                    ${producto.precioOriginal ? `<span class="carrusel-item-precio-original">$${producto.precioOriginal.toFixed(2)}</span>` : ''}
+                    ${descuento > 0 ? `<div class="carrusel-descuento">-${descuento}%</div>` : ''}
+                </div>
+            </div>
+        `;
+        
+        item.addEventListener('click', () => abrirModal(producto));
+        track.appendChild(item);
+    });
+}
+
+function configurarCarrouselEventos(productosOferta) {
+    const prevBtn = document.getElementById('carrusel-prev');
+    const nextBtn = document.getElementById('carrusel-next');
+    
+    if (!prevBtn || !nextBtn) return;
+    
+    prevBtn.addEventListener('click', () => {
+        if (carouselPos > 0) {
+            carouselPos--;
+            actualizarPosicionCarrousel(productosOferta.length);
+        }
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        if (carouselPos < productosOferta.length - itemsPerView) {
+            carouselPos++;
+            actualizarPosicionCarrousel(productosOferta.length);
+        }
+    });
+}
+
+function actualizarPosicionCarrousel(totalItems) {
+    const track = document.getElementById('carrusel-track');
+    const prevBtn = document.getElementById('carrusel-prev');
+    const nextBtn = document.getElementById('carrusel-next');
+    
+    if (!track) return;
+    
+    // [MEJORA] Cálculo preciso en píxeles (Elemento + Gap real) en vez de % fijos que ignoraban las separaciones
+    const items = track.querySelectorAll('.carrusel-item');
+    if (items.length > 0) {
+        const itemWidth = items[0].getBoundingClientRect().width;
+        const trackStyles = window.getComputedStyle(track);
+        const gap = parseFloat(trackStyles.gap) || 0;
+        
+        const offset = carouselPos * (itemWidth + gap);
+        track.style.transform = `translateX(-${offset}px)`;
+    }
+    
+    if (prevBtn && nextBtn) {
+        prevBtn.disabled = carouselPos === 0;
+        nextBtn.disabled = carouselPos >= totalItems - itemsPerView;
+    }
+}
+
 // Inicializar cuando el DOM está listo
 document.addEventListener('DOMContentLoaded', function() {
     // Optimizaciones para iOS
@@ -959,6 +1089,7 @@ document.addEventListener('DOMContentLoaded', function() {
         optimizarParaIOS();
     }
     
+    inicializarCarrouselOfertas();
     cargarProductos();
     configurarEventos();
     configurarMenuHamburger();
@@ -1407,19 +1538,13 @@ function cargarProductos() {
             <div class="imagen-wrapper">
                 ${carouselHTML}
             </div>
-            ${producto.oferta ? '<div class="oferta-badge">OFERTA</div>' : ''}
             <div class="producto-body">
                 <h3 class="producto-nombre">${producto.nombre}</h3>
                 <span class="producto-modelo">${modelosTexto}</span>
                 <div class="py-3 border-t border-slate-200"></div>
                 <div class="flex justify-between items-center">
                     <div class="producto-precio">
-                        ${producto.oferta && producto.precioOriginal ? `
-                            <div style="margin-bottom: 4px;">
-                                <span style="font-size: 0.75rem; color: #9ca3af; text-decoration: line-through; display: inline-block;">$${producto.precioOriginal.toFixed(2)}</span>
-                            </div>
-                        ` : ''}
-                        <div style="font-size: 1.125rem; font-weight: 700; color: #0f172a;">$${producto.precio.toFixed(2)}</div>
+                        <div style="font-size: 1.125rem; font-weight: 700; color: #000000;">$${producto.precio.toFixed(2)}</div>
                     </div>
                     <div class="producto-disponibilidad-badge ${disponible ? 'disponible' : 'no-disponible'}">
                         ${disponible ? 'Disponible' : 'No disponible'}
@@ -1826,7 +1951,7 @@ function abrirModal(producto) {
             <div style="margin-bottom: 8px;">
                 <span style="font-size: 0.875rem; color: #9ca3af; text-decoration: line-through;">$${producto.precioOriginal.toFixed(2)}</span>
             </div>
-            <div style="font-size: 1.5rem; font-weight: 700; color: #0f172a;">$${producto.precio.toFixed(2)}</div>
+            <div style="font-size: 1.5rem; font-weight: 700; color: #000000;">$${producto.precio.toFixed(2)}</div>
         `;
     } else {
         modalPrecioDiv.textContent = `$${producto.precio.toFixed(2)}`;

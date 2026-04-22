@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo de Repuestos Automotrices</title>
+    
+    <!-- Modern Inter Font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -148,6 +154,20 @@
     <!-- Productos -->
     <section class="productos">
         <div class="container">
+            <!-- Carrusel de Ofertas -->
+            <div id="carrusel-ofertas-container" class="carrusel-ofertas-container" style="display: none;">
+                <h3 class="carrusel-titulo"> Ofertas </h3>
+                <div class="carrusel-wrapper">
+                    <button class="carrusel-btn carrusel-btn-prev" id="carrusel-prev">❮</button>
+                    <div class="carrusel-track-container">
+                        <div class="carrusel-track" id="carrusel-track">
+                            <!-- Los productos en oferta se cargarán aquí -->
+                        </div>
+                    </div>
+                    <button class="carrusel-btn carrusel-btn-next" id="carrusel-next">❯</button>
+                </div>
+            </div>
+
             <div id="productos-grid" class="productos-grid">
                 <!-- Los productos se cargarán aquí con JavaScript -->
             </div>
